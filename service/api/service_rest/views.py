@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import json
+from datetime import datetime
 
 from .encoders import (
     AutomobileVOEncoder,
@@ -66,6 +67,9 @@ def api_list_appointments(request, automobile_vo_id=None):
     # Create service
     else:
         content = json.loads(request.body)
+        # date = content["date"]
+        # jsondate = datetime.fromisoformat(date)
+        # content["date"] = jsondate
         try:
             auto_href = content["auto"]
             auto = AutomobileVO.objects.get(import_href=auto_href)

@@ -24,8 +24,7 @@ class Technician(models.Model):
 class Service(models.Model):
     vin = models.CharField(max_length=20)
     vehicle_owner = models.CharField(max_length=200)
-    date = models.DateField()
-    time = models.TimeField()
+    starts = models.DateTimeField()
     reason = models.CharField(max_length=200)
     finished = models.BooleanField(default=False)
     vip = models.BooleanField(default=False)

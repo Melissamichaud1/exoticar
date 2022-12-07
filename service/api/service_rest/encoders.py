@@ -18,7 +18,7 @@ class TechnicianDetailEncoder(ModelEncoder):
 
 class AppointmentListEncoder(ModelEncoder):
     model = Service
-    properties = ["vin", "vehicle_owner", "date", "time", "technician", "reason", "id", "auto", "finished", "vip"]
+    properties = ["vin", "vehicle_owner", "starts", "technician", "reason", "id", "auto", "finished", "vip"]
     encoders = {
         "auto": AutomobileVOEncoder(),
         "technician": TechnicianDetailEncoder(),
@@ -26,7 +26,7 @@ class AppointmentListEncoder(ModelEncoder):
 
 class AppointmentDetailEncoder(ModelEncoder):
     model = Service
-    properties = ["vin", "vehicle_owner", "date", "time", "technician", "reason", "id", "auto", "finished", "vip"]
+    properties = ["vin", "vehicle_owner", "starts", "technician", "reason", "id", "auto", "finished", "vip"]
     encoders = {
         "auto": AutomobileVOEncoder(),
         "technician": TechnicianDetailEncoder(),
