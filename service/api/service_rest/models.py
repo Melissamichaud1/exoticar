@@ -38,7 +38,7 @@ class Service(models.Model):
 
     technician = models.ForeignKey(
         Technician,
-        related_name="services",
+        related_name="technicians",
         on_delete=models.PROTECT,
     )
 

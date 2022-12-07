@@ -67,21 +67,20 @@ def api_list_appointments(request, automobile_vo_id=None):
     else:
         content = json.loads(request.body)
         try:
-            technician = Technician.objects.get(employee_number=content["technician"])
-            content["technician"] = technician
-        except Technician.DoesNotExist:
-            return JsonResponse(
-                {"message": "Technician does not exist"},
-            )
-        try:
-            automobile_href = content["auto"]
-            auto = AutomobileVO.objects.get(import_href=automobile_href)
+            auto_href = content["auto"]
+            auto = AutomobileVO.objects.get(import_href=auto_href)
             content["auto"] = auto
         except AutomobileVO.DoesNotExist:
             return JsonResponse(
-                {"message": "Invalid entry, try again."}
+                {"message": "Invalid automobile, try again!"}
             )
-
+        try:
+            technician = Technician.objects.get(employee_number=content["technician"])
+            content["technician"]=technician
+        except Technician.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid technician, try again!"}
+            )
         service = Service.objects.create(**content)
         return JsonResponse(
             service,
