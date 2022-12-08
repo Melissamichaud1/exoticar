@@ -30,7 +30,7 @@ function VehicleModelForm() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = {...vehicleModel}
-        const vehicleModelUrl = "http://localhost:8100/api//";
+        const vehicleModelUrl = "http://localhost:8100/api/models/";
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),
