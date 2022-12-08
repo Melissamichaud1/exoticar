@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from "react";
+import DatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css";
 
 function ServiceAppointmentForm() {
     const [service, setService] = useState ({
         vin: '',
         vehicle_owner: '',
-        starts: new Date(),
+        starts: '',
         reason: '',
         technician: [],
     });
-
-    const [date, setDate] = useState('');
-    const handleChangeDate = (date) => (date !== null) ? setDate(date): {};
 
     const [technician, setTechnician] = useState([]);
     const loadTechnician = async () => {
@@ -35,7 +34,9 @@ function ServiceAppointmentForm() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = {...service};
-        data['starts'] = date;
+        data['starts'] = data.date+"T"+data.time;
+        delete data.time;
+        delete data.date;
         delete data.technician;
         console.log(data);
 
@@ -60,7 +61,7 @@ function ServiceAppointmentForm() {
                 technician: '',
 
             });
-            ;setDate('')
+            setDate('')
         };
     };
     return (
@@ -93,22 +94,6 @@ function ServiceAppointmentForm() {
                       className="form-control"
                     />
                     <label htmlFor="vehicle_owner">Vehicle Owner</label>
-                  </div>
-                  <div className="form-floating mb-3">
-                    <DatePicker onChange={handleChangeDate}
-                      value={service.starts}
-                      showTimeSelect
-                      timeFormat="HH:mm"
-                      timeIntervals={10}
-                      timeCaption="time"
-                      dateFormat="MMMM d, yyyy h:mm aa"
-                      placeholder="Date and Time"
-                      required type="text"
-                      name="starts"
-                      id="starts"
-                      className="form-control"
-                    />
-                    <label htmlFor="name">Date and Time</label>
                   </div>
                   <div className="mb-3">
                     <select
@@ -159,10 +144,5 @@ function ServiceAppointmentForm() {
 
 
 
-
-
-
-
-}
 
 export default ServiceAppointmentForm;
