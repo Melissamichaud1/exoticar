@@ -5,7 +5,6 @@ import ServiceAppointmentList from "./Service/ServiceAppointmentList";
 import ServiceAppointmentForm from "./Service/ServiceAppointmentForm";
 import ServiceHistoryList from "./Service/ServiceHistoryList";
 
-import TechList from "./Service/TechList";
 import TechForm from "./Service/TechForm";
 
 function App(props) {

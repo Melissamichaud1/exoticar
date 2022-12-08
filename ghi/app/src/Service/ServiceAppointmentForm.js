@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 function ServiceAppointmentForm() {
     const [service, setService] = useState ({
         vin: '',
         vehicle_owner: '',
-        starts: '',
+        starts: new Date(),
         reason: '',
         technicians: [],
     });
@@ -21,16 +24,19 @@ function ServiceAppointmentForm() {
         }
     }
 
-    const [date, setDate] = useState([]);
+    const handleChange = (event) => {
+        setService({...service, [event.target.name]: event.target.value});
+    }
+
+
+    // Date is set to empty array, handleChangeDate function called when date is changed
+    // Date is set to the date that was selected by user
+    const [date, setDate] = useState('');
     const handleChangeDate = (date) => (date !== null) ? setDate(date): {};
 
     useEffect(() => {
         loadTechnicians();
     }, []);
-
-    const handleChange = (event) => {
-        setService({...service, [event.target.name]: event.target.value});
-    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -39,12 +45,13 @@ function ServiceAppointmentForm() {
         delete data.technicians;
         console.log(data);
 
+
         const fetchConfig = {
             method: "POST",
-            // body: JSON.stringify(data),
-            // headers: {
-            //   "Content-Type": "application/json",
-            // },
+            body: JSON.stringify(data),
+            headers: {
+              "Content-Type": "application/json",
+            },
           };
 
         const serviceUrl = 'http://localhost:8080/api/service/'
@@ -60,6 +67,8 @@ function ServiceAppointmentForm() {
                 reason: '',
                 technician: '',
             });
+            setDate('')
+
 
         };
     };
@@ -95,26 +104,19 @@ function ServiceAppointmentForm() {
                     <label htmlFor="vehicle_owner">Vehicle Owner</label>
                   </div>
                   <div className="form-floating mb-3">
-                    <input onChange={handleChangeDate}
-                        value={service.date}
-                        placeholder="Date"
-                        required type="date"
-                        name="date"
-                        id="date"
+                    <DatePicker onChange={handleChangeDate}
+                        value={service.starts}
+                        placeholder="Date and Time"
+                        name="starts"
+                        id="starts"
                         className="form-control"
-                    />
-                    <label htmlFor="date">Date</label>
-                </div>
-                  <div className="form-floating mb-3">
-                    <input onChange={handleChangeDate}
-                        value={service.time}
-                        placeholder="Time"
-                        required type="time"
-                        name="time"
-                        id="time"
-                        className="form-control"
-                    />
-                    <label htmlFor="time">Time</label>
+                        selected={date}
+                        showtimeselect
+                        timeFormat="HH:mm"
+                        timeIntervals={10}
+                        timeCaption="time"
+                        dateFormat="MMMM d, yyyy h:mm aa"/>
+                    <label htmlFor="date">Date and Time</label>
                 </div>
                   <div className="mb-3">
                     <select
@@ -140,13 +142,13 @@ function ServiceAppointmentForm() {
                   <div className="form=floating mb-3">
                     <textarea onChange={handleChange}
                         value={service.reason}
-                        placeholder="explain your issue briefly"
+                        placeholder="Please explain your issue briefly"
                         required type="text"
                         name="reason"
                         id="reason"
                         className="form-control">
                     </textarea>
-                    <label htmlFor="reason">Reason</label>
+                    <label htmlFor="reason"></label>
                   </div>
                   <div className="container">
                   <div className="col-md-12 text-center">
