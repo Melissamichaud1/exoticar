@@ -11,12 +11,12 @@ function CustomerForm() {
         setCustomer({...customer, [event.target.name]: event.target.value});
     };
 
-    async function handleSubmit(event) {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = setCustomer
+        const data = {...customer}
         const customerUrl = "http://localhost:8090/api/customers/";
         const fetchConfig = {
-            method: "POST",
+            method: "post",
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json",
@@ -49,7 +49,7 @@ function CustomerForm() {
                         required type="text"
                         className="form-control"
                         />
-                        <label htmlFor="name"></label>
+                        <label htmlFor="name">Name</label>
                     </div>
                     <div className="form-floating mb-3">
                         <input
@@ -61,7 +61,7 @@ function CustomerForm() {
                         required type="text"
                         className="form-control"
                         />
-                        <label htmlFor="address"></label>
+                        <label htmlFor="address">Address</label>
                     </div>
                     <div className="form-floating mb-3">
                         <input
@@ -73,7 +73,7 @@ function CustomerForm() {
                         required type="number"
                         className="form-control"
                         />
-                        <label htmlFor="phone_number"></label>
+                        <label htmlFor="phone_number">Phone Number</label>
                     </div>
                     <button className="btn btn-primary">Add Customer</button>
                     </form>

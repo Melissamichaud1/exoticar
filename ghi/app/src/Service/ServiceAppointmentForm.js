@@ -40,7 +40,7 @@ function ServiceAppointmentForm() {
         console.log(data);
 
         const fetchConfig = {
-            method: "POST",
+            // method: "POST",
             // body: JSON.stringify(data),
             // headers: {
             //   "Content-Type": "application/json",
