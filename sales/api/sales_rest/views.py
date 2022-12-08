@@ -6,7 +6,6 @@ from .encoders import (
     SalesmanEncoder,
     SaleEncoder,
     CustomerEncoder,
-    AutomobileVOEncoder
 )
 from .models import Sale, Salesman, Customer, AutomobileVO
 
