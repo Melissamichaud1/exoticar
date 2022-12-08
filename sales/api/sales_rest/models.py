@@ -6,11 +6,8 @@ class Salesman(models.Model):
     name = models.CharField(max_length=50)
     employee_id = models.PositiveIntegerField(unique=True)
 
-    def __str__(self):
-        return self.name
-
     def get_api_url(self):
-        return reverse("api_vehicle_model", kwargs={"pk": self.employee_id})
+        return reverse("api_salesman", kwargs={"pk": self.employee_id})
 
 
 class Customer(models.Model):
@@ -18,19 +15,19 @@ class Customer(models.Model):
     address = models.CharField(max_length=50)
     phone_number = models.PositiveIntegerField()
 
-    def __str__(self):
-        return self.name
-
     def get_api_url(self):
-        return reverse("api_customer", kwargs={"id": self.id})
+        return reverse("api_customer", kwargs={"pk": self.id})
 
 
 class AutomobileVO(models.Model):
     color = models.CharField(max_length=50)
     year = models.PositiveSmallIntegerField()
     vin = models.CharField(max_length=17)
-    # for_sale = models.BooleanField(default=True)
     import_href = models.CharField(max_length=200, null=True)
+    for_sale = models.BooleanField(default=True)
+
+    def get_api_url(self):
+        return reverse("api_automobile_vo", kwargs={"pk": self.id})
 
 
 class Sale(models.Model):
@@ -50,3 +47,6 @@ class Sale(models.Model):
         related_name="sales",
         on_delete=models.PROTECT,
         )
+
+    def get_api_url(self):
+        return reverse("api_sale", kwargs={"pk": self.id})

@@ -6,9 +6,9 @@ from .encoders import (
     SalesmanEncoder,
     SaleEncoder,
     CustomerEncoder,
-    AutomobileVO
+    AutomobileVOEncoder
 )
-from .models import Sale, Salesman, Customer
+from .models import Sale, Salesman, Customer, AutomobileVO
 
 
 @require_http_methods(["GET", "POST"])
@@ -92,7 +92,7 @@ def api_customer(request, id):
 
 
 @require_http_methods(["GET", "POST"])
-def api_list_sales(request, ):
+def api_list_sales(request, autoumobile_vo_id=None):
     if request.method == "GET":
         sales = Sale.objects.all()
         return JsonResponse(
@@ -126,15 +126,16 @@ def api_list_sales(request, ):
             auto_href = content["auto"]
             auto = AutomobileVO.objects.get(import_href=auto_href)
             content["auto"] = auto
-            sale = Sale.objects.create(**content)
-            return JsonResponse(
-                sale,
-                encoder=SaleEncoder,
-                safe=False,
-                )
         except AutomobileVO.DoesNotExist:
             response = JsonResponse(
                 {"message": "Could not add sale, doesn't match inventory"},
             )
             response.status_code = 400
             return response
+
+        sale = Sale.objects.create(**content)
+        return JsonResponse(
+            sale,
+            encoder=SaleEncoder,
+            safe=False,
+            )

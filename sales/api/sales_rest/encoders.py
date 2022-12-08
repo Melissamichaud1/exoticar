@@ -28,6 +28,7 @@ class AutomobileVOEncoder(ModelEncoder):
         "year",
         "vin",
         "import_href",
+        "for_sale,"
     ]
 
 class SaleEncoder(ModelEncoder):
@@ -40,7 +41,7 @@ class SaleEncoder(ModelEncoder):
         "auto",
     ]
     encoders = {
-        "customer": CustomerEncoder,
-        "salesman": SalesmanEncoder,
-        "auto": AutomobileVOEncoder,
+        "customer": CustomerEncoder(),
+        "salesman": SalesmanEncoder(),
+        "auto": AutomobileVOEncoder(),
     }

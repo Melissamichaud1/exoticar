@@ -5,7 +5,7 @@ import time
 import json
 import requests
 
-sys.path.append("")
+sys.path.append("/sales/api/")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "sales_project.settings")
 django.setup()
 
