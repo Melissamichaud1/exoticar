@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom"
 
 function ServiceAppointmentList() {
 
-    const [services, setServices] = useState([]);
+    const [services, setServices] = useState(null);
 
     const fetchServices  = async () => {
         const url = 'http://localhost:8080/api/service/'
@@ -12,6 +12,8 @@ function ServiceAppointmentList() {
             const data = await response.json();
             console.log(data);
             setServices(data.services);
+        } else {
+            console.error(response);
         }
     }
     const cancelService = async (id) => {
@@ -22,8 +24,16 @@ function ServiceAppointmentList() {
 
     const finishService = async (id) => {
         const finishUrl = `http://localhost:8080/api/service/${id}/`
-        const response = await fetch(finishUrl, {method: 'GET'});
-        fetchServices()
+        const status = {"status": "COMPLETE"}
+        const fetchConfig = {
+            method: "PUT",
+            body: JSON.stringify(status),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        const response = await fetch(finishUrl, fetchConfig);
+        // fetchServices()
     }
 
     useEffect(() => {
@@ -37,8 +47,9 @@ function ServiceAppointmentList() {
         <h2 className="display-5 fw-bold">Service Appointments</h2>
         </div>
         <div className="col-md-12 text-center">
-        <button type="button" className="btn btn-light"><NavLink className="nav-link" aria-current="page" to="/service/new">Create an Appointment</NavLink></button>
-        <button type="button" className="btn btn-light"><NavLink className="nav-link" aria-current="page" to="/service/history">Service History</NavLink></button>
+        <button type="button" className="btn btn-outline-dark"><NavLink className="nav-link" aria-current="page" to="/service/new">Create an Appointment</NavLink></button>
+        <button type="button" className="btn btn-outline-dark"><NavLink className="nav-link" aria-current="page" to="/service/history">Service History</NavLink></button>
+        <button type="button" className="btn btn-outline-dark"><NavLink className="nav-link" aria-current="page" to="/technicians/new">Create a Technician</NavLink></button>
         </div>
         <table className="table table-striped">
             <thead>
@@ -52,7 +63,7 @@ function ServiceAppointmentList() {
                 </tr>
             </thead>
             <tbody>
-                {services.map(service => {
+                {services?.filter((service) => service.status !== "COMPLETE") ?.map(service => {
                         let date = Date.parse(service.starts)
                         const newDate = Date(date)
 
@@ -76,6 +87,8 @@ function ServiceAppointmentList() {
                             <td><button onClick={ () => cancelService(service.id)}
                                 className="btn btn-danger">Cancel</button></td>
                             <td><button onClick={ () => finishService(service.id)}
+                            name="status"
+                            value={service.status}
                             className="btn btn-success">Finished</button></td>
                         </tr>
                     );

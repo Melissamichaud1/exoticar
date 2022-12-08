@@ -25,7 +25,7 @@ function Nav() {
                     className="dropdown-item"
                     to="/service/"
                   >
-                    Service Appointments
+                    List of Service Appointments
                   </NavLink>
                 </li>
                 <li className="nav-item">
@@ -41,7 +41,15 @@ function Nav() {
                     className="dropdown-item"
                     to="/service/history/"
                   >
-                    Service History
+                    Service Appointment History
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/technicians/new/"
+                  >
+                    Create a technician
                   </NavLink>
                 </li>
               </ul>
