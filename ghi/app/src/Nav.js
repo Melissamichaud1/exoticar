@@ -36,6 +36,14 @@ function Nav() {
                     Create a Service Appointment
                   </NavLink>
                 </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/service/history/"
+                  >
+                    Service History
+                  </NavLink>
+                </li>
               </ul>
             </li>
           </ul>

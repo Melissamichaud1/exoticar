@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from "react";
-import DatePicker from 'react-datepicker'
-import "react-datepicker/dist/react-datepicker.css";
 
 function ServiceAppointmentForm() {
     const [service, setService] = useState ({
@@ -8,23 +6,26 @@ function ServiceAppointmentForm() {
         vehicle_owner: '',
         starts: '',
         reason: '',
-        technician: [],
+        technicians: [],
     });
 
-    const [technician, setTechnician] = useState([]);
-    const loadTechnician = async () => {
+    const [technicians, setTechnicians] = useState([]);
+    const loadTechnicians = async () => {
         const url = 'http://localhost:8080/api/technicians/';
         const response = await fetch(url);
-        const data = await response.json();
+        const techData = await response.json();
         if (response.ok) {
-            setTechnician(data.technician);
+            setTechnicians(techData.technicians);
         } else {
             console.error(response);
         }
     }
 
+    const [date, setDate] = useState([]);
+    const handleChangeDate = (date) => (date !== null) ? setDate(date): {};
+
     useEffect(() => {
-        loadTechnician();
+        loadTechnicians();
     }, []);
 
     const handleChange = (event) => {
@@ -34,20 +35,19 @@ function ServiceAppointmentForm() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = {...service};
-        data['starts'] = data.date+"T"+data.time;
-        delete data.time;
-        delete data.date;
-        delete data.technician;
+        data['starts'] = date
+        delete data.technicians;
         console.log(data);
 
-        const serviceUrl = "http://localhost:8080/api/service/"
         const fetchConfig = {
             method: "POST",
-            body: JSON.stringify(data),
+            // body: JSON.stringify(data),
             headers: {
               "Content-Type": "application/json",
             },
           };
+
+        const serviceUrl = 'http://localhost:8080/api/service/'
         const response = await fetch(serviceUrl, fetchConfig);
         if (response.ok) {
             const newService = await response.json();
@@ -59,9 +59,8 @@ function ServiceAppointmentForm() {
                 starts: '',
                 reason: '',
                 technician: '',
-
             });
-            setDate('')
+
         };
     };
     return (
@@ -95,6 +94,28 @@ function ServiceAppointmentForm() {
                     />
                     <label htmlFor="vehicle_owner">Vehicle Owner</label>
                   </div>
+                  <div className="form-floating mb-3">
+                    <input onChange={handleChangeDate}
+                        value={service.date}
+                        placeholder="Date"
+                        required type="date"
+                        name="date"
+                        id="date"
+                        className="form-control"
+                    />
+                    <label htmlFor="date">Date</label>
+                </div>
+                  <div className="form-floating mb-3">
+                    <input onChange={handleChangeDate}
+                        value={service.time}
+                        placeholder="Time"
+                        required type="time"
+                        name="time"
+                        id="time"
+                        className="form-control"
+                    />
+                    <label htmlFor="time">Time</label>
+                </div>
                   <div className="mb-3">
                     <select
                       onChange={handleChange}
@@ -103,8 +124,8 @@ function ServiceAppointmentForm() {
                       name="technician"
                       className="form-select"
                     >
-                      <option value="">Choose A Technician..</option>
-                      {technician.map(technician => {
+                      <option value="">Choose a technician..</option>
+                      {technicians.map(technician => {
                         return (
                           <option
                             key={technician.id}
@@ -119,7 +140,7 @@ function ServiceAppointmentForm() {
                   <div className="form=floating mb-3">
                     <textarea onChange={handleChange}
                         value={service.reason}
-                        placeholder="reason"
+                        placeholder="explain your issue briefly"
                         required type="text"
                         name="reason"
                         id="reason"
