@@ -125,6 +125,11 @@ def api_list_sales(request, autoumobile_vo_id=None):
         try:
             auto_href = content["auto"]
             auto = AutomobileVO.objects.get(import_href=auto_href)
+            if auto.for_sale == True:
+                auto.for_sale = False
+                auto.save()
+            else:
+                return JsonResponse({"message": "This car has already been sold"}, safe=False)
             content["auto"] = auto
         except AutomobileVO.DoesNotExist:
             response = JsonResponse(

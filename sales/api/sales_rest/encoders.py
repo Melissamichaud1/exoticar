@@ -28,7 +28,7 @@ class AutomobileVOEncoder(ModelEncoder):
         "year",
         "vin",
         "import_href",
-        "for_sale,"
+        "for_sale",
     ]
 
 class SaleEncoder(ModelEncoder):
