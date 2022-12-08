@@ -9,7 +9,7 @@ class AutomobileVO(models.Model):
     year = models.PositiveSmallIntegerField()
     vin = models.CharField(max_length=20)
     import_href = models.CharField(max_length=200, unique=True, null=True)
-
+# Remove unnecessary ones (Kai)
 
 # Create a technician
 class Technician(models.Model):
