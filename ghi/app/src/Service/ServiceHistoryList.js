@@ -29,7 +29,7 @@ class ServiceHistoryList extends React.Component {
         return (
                 <div>
                     <div>&nbsp;</div>
-                    <input onChange={this.handleSearchChange} value={this.state.search} type="text" className="form-control" placeholder="Search VIN"/>
+                    <input onChange={this.handleSearchChange} value={this.state.search} type="search" id="form1" className="form-control" placeholder="Search VIN"/>
 
                     <h2 className="display-5 fw-bold">Service History</h2>
                     <table className="table table-striped">

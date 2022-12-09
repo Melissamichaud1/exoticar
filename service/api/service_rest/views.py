@@ -57,7 +57,7 @@ def api_delete_technician(request, id):
 
 
 @require_http_methods(["GET", "POST"])
-def api_list_appointments(request, automobile_vo_id=None):
+def api_list_appointments(request):
     if request.method == "GET":
         services = Service.objects.all()
         return JsonResponse(
@@ -67,20 +67,9 @@ def api_list_appointments(request, automobile_vo_id=None):
     # Create service
     else:
         content = json.loads(request.body)
-        # date = content["date"]
-        # jsondate = datetime.fromisoformat(date)
-        # content["date"] = jsondate
-        try:
-            auto_href = content["auto"]
-            auto = AutomobileVO.objects.get(import_href=auto_href)
-            content["auto"] = auto
-        except AutomobileVO.DoesNotExist:
-            return JsonResponse(
-                {"message": "Invalid automobile, try again!"}
-            )
         try:
             technician = Technician.objects.get(employee_number=content["technician"])
-            content["technician"]=technician
+            content["technician"] = technician
         except Technician.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid technician, try again!"}
@@ -93,23 +82,21 @@ def api_list_appointments(request, automobile_vo_id=None):
         )
 
 
-@require_http_methods(['PUT','DELETE'])
+@require_http_methods(['GET','PUT','DELETE'])
 def api_show_appointments(request, id):
-    if request.method == 'DELETE':
-        try:
-            service = Service.objects.get(id=id)
-            service.delete()
-            return JsonResponse(
-                {'message': 'Appointment was deleted successfully'},
-                service,
-                encoder=AppointmentDetailEncoder,
-                safe = False,
-            )
-        except Service.DoesNotExist:
-            return JsonResponse({"message": 'The appointment you are tring to delete does not exist'})
+    if request.method == "GET":
+        service = Service.objects.get(id=id)
+        return JsonResponse(
+            service,
+            encoder=AppointmentDetailEncoder,
+            safe=False
+        )
+    elif request.method == "DELETE":
+        count, _ = Service.objects.filter(id=id).delete()
+        return JsonResponse({"deleted": count > 0})
     else:
         content = json.loads(request.body)
-        Service.object.filter(id=id).update(**content)
+        Service.objects.filter(id=id).update(**content)
         service = Service.objects.get(id=id)
         return JsonResponse(
             service,

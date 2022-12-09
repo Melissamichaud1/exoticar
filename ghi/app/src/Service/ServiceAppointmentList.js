@@ -6,7 +6,7 @@ function ServiceAppointmentList() {
     const [services, setServices] = useState(null);
 
     const fetchServices  = async () => {
-        const url = 'http://localhost:8080/api/service/'
+        const url = 'http://localhost:8080/api/service/';
         const response = await fetch(url);
         if (response.ok) {
             const data = await response.json();
@@ -26,7 +26,7 @@ function ServiceAppointmentList() {
         const finishUrl = `http://localhost:8080/api/service/${id}/`
         const status = {"status": "COMPLETE"}
         const fetchConfig = {
-            method: "PUT",
+            method: "put",
             body: JSON.stringify(status),
             headers: {
                 'Content-Type': 'application/json',
@@ -67,17 +67,12 @@ function ServiceAppointmentList() {
                         let date = Date.parse(service.starts)
                         const newDate = Date(date)
 
-                        let finished = ''
-                        if (service.finished == true) {
-                            finished = 'd-none'
-                        }
-
                         let is_vip = ''
                         if (service.vip == true) {
                             is_vip = <i class="bi bi-car-front-fill"></i>
                         }
                     return (
-                        <tr className ={finished} key={service.id}>
+                        <tr key={service.id}>
                             <td>{ service.vin }</td>
                             <td>{ service.vehicle_owner }</td>
                             <td>{ newDate.toLocaleString()}</td>

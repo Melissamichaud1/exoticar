@@ -90,6 +90,66 @@ function Nav() {
                 </li>
               </ul>
               </li>
+              <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Inventory
+              </a>
+              <ul className="dropdown-menu">
+                <li className="nav-item">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/automobiles/"
+                  >
+                    List of Automobiles
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/automobiles/new/"
+                  >
+                    Create an Automobile
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/manufacturers/"
+                  >
+                    List of Manufacturers
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/manufacturerss/new/"
+                  >
+                    Create a Manufacturer
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/modelss/"
+                  >
+                    List of Vehicle Models
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/models/new/"
+                  >
+                    Create a Vehicle Model
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
