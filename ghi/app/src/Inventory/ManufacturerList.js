@@ -26,7 +26,7 @@ function ManufacturersList() {
         <h2 className="display-5 fw-bold">List of Manufacturers</h2>
         </div>
         <div className="col-md-12 text-center">
-        <button type="button" className="btn btn-outline-dark"><NavLink className="nav-link" aria-current="page" to="/manufacturers/new">Create a manufacturer</NavLink></button>
+        <button type="button" className="btn btn-success"><NavLink style={{color:"white"}} className="nav-link" aria-current="page" to="/manufacturers/new">Create a manufacturer</NavLink></button>
         </div>
       <table className="table table-striped">
         <thead>
