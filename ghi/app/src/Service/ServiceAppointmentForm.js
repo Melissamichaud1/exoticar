@@ -1,88 +1,119 @@
-import React, {useEffect, useState} from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import React from "react";
 
-
-function ServiceAppointmentForm() {
-    const [service, setService] = useState ({
-        vin: '',
-        vehicle_owner: '',
-        starts: new Date(),
-        reason: '',
-        technicians: [],
-    });
-
-    const [technicians, setTechnicians] = useState([]);
-    const loadTechnicians = async () => {
-        const url = 'http://localhost:8080/api/technicians/';
-        const response = await fetch(url);
-        const techData = await response.json();
-        if (response.ok) {
-            setTechnicians(techData.technicians);
-        } else {
-            console.error(response);
-        }
+class ServiceAppointmentForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            vin: "",
+            vehicle_owner: "",
+            starts: "",
+            technician: "",
+            reason: "",
+            technicians: [],
+        };
+        this.handleVinChange = this.handleVinChange.bind(this);
+        this.handleVehicleOwnerChange = this.handleVehicleOwnerChange.bind(this);
+        this.handleStartsChange = this.handleStartsChange.bind(this);
+        this.handleTechnicianChange = this.handleTechnicianChange.bind(this);
+        this.handleReasonChange = this.handleReasonChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    const handleChange = (event) => {
-        setService({...service, [event.target.name]: event.target.value});
-    }
-
-
-    // Date is set to empty array, handleChangeDate function called when date is changed
-    // Date is set to the date that was selected by user
-    const [date, setDate] = useState('');
-    const handleChangeDate = (date) => (date !== null) ? setDate(date): {};
-
-    useEffect(() => {
-        loadTechnicians();
-    }, []);
-
-    const handleSubmit = async (event) => {
+    async handleSubmit(event) {
         event.preventDefault();
-        const data = {...service};
-        data['starts'] = date
+        const data = { ...this.state };
         delete data.technicians;
         console.log(data);
 
-
+        const servicesUrl = "http://localhost:8080/api/service/";
         const fetchConfig = {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
-              "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
-          };
+        };
 
-        const serviceUrl = 'http://localhost:8080/api/service/'
-        const response = await fetch(serviceUrl, fetchConfig);
+        const response = await fetch(servicesUrl, fetchConfig);
         if (response.ok) {
             const newService = await response.json();
             console.log(newService);
 
-            setService({
-                vin: '',
-                vehicle_owner: '',
-                starts: '',
-                reason: '',
-                technician: '',
-            });
-            setDate('')
+            const cleared = {
+                vin: "",
+                vehicle_owner: "",
+                starts: "",
+                technician: "",
+                reason: "",
+            };
+            this.setState(cleared);
+            }
+        }
 
 
-        };
-    };
+    async componentDidMount() {
+        const technicianUrl = "http://localhost:8080/api/technicians/";
+
+        const response = await fetch(technicianUrl);
+
+        if (response.ok) {
+            const data = await response.json();
+            this.setState({ technicians: data.technicians });
+        }
+    }
+
+
+    handleVinChange(event) {
+        const value = event.target.value;
+        this.setState({ vin: value });
+    }
+
+    handleVehicleOwnerChange(event) {
+        const value = event.target.value;
+        this.setState({ vehicle_owner: value });
+    }
+
+    handleStartsChange(event) {
+        const value = event.target.value;
+        this.setState({ starts: value });
+    }
+
+    handleTechnicianChange(event) {
+        const value = event.target.value;
+        this.setState({ technician: value });
+    }
+
+    handleReasonChange(event) {
+        const value = event.target.value;
+        this.setState({ reason: value });
+    }
+
+
+    render() {
+        let notSubmittedClass = "not-submitted";
+        let submittedClass = "alert alert-success d-none mb-0";
+
+        if (this.state.success === true) {
+            notSubmittedClass = "not-submitted d-none";
+            submittedClass = "alert alert-success mb-0";
+        }
+        let spinnerClasses = "d-flex justify-content-center mb-3";
+        let dropdownClasses = "form-select d-none";
+        if (this.state.technicians.length > 0 ) {
+            spinnerClasses = "d-flex justify-content-center mb-3";
+            dropdownClasses = "form-select";
+        }
     return (
         <div className="container">
           <div className="row">
             <div className="offset-3 col-6">
               <div className="shadow p-4 mt-4">
                 <h1>Create a Service Appointment</h1>
-                <form onSubmit={handleSubmit} id="create-service-form">
+                <form onSubmit={this.handleSubmit} id="create-service-form">
                   <div className="form-floating mb-3">
                     <input
-                      onChange={handleChange}
-                      value={service.vin}
+                      onChange={this.handleVinChange}
+                      value={this.state.vin}
                       placeholder="vin"
                       required type="text"
                       name="vin"
@@ -93,9 +124,9 @@ function ServiceAppointmentForm() {
                   </div>
                   <div className="form-floating mb-3">
                     <input
-                      onChange={handleChange}
-                      value={service.vehicle_owner}
-                      placeholder="vehicle_owner"
+                      onChange={this.handleVehicleOwnerChange}
+                      value={this.state.vehicle_owner}
+                      placeholder="Vehicle Owner"
                       required type="text"
                       name="vehicle_owner"
                       id="vehicle_owner"
@@ -104,34 +135,29 @@ function ServiceAppointmentForm() {
                     <label htmlFor="vehicle_owner">Vehicle Owner</label>
                   </div>
                   <div className="form-floating mb-3">
-                    <DatePicker onChange={handleChangeDate}
-                        value={service.starts}
-                        placeholder="Date and Time"
-                        name="starts"
-                        id="starts"
-                        className="form-control"
-                        selected={date}
-                        showtimeselect
-                        timeFormat="HH:mm"
-                        timeIntervals={10}
-                        timeCaption="time"
-                        dateFormat="MMMM d, yyyy h:mm aa"/>
-                    <label htmlFor="date">Date and Time</label>
-                </div>
+                    <input
+                      onChange={this.handleStartsChange}
+                      value={this.state.starts}
+                      placeholder="Date and Time"
+                      required type="datetime-local"
+                      name="starts"
+                      id="starts"
+                      className="form-control"
+                    />
+                    <label htmlFor="starts">Date and Time</label>
+                  </div>
                   <div className="mb-3">
                     <select
-                      onChange={handleChange}
-                      value={service.technician}
-                      id="technician"
+                      onChange={this.handleTechnicianChange}
                       name="technician"
-                      className="form-select"
-                    >
+                      id="technician"
+                      className={dropdownClasses} required>
                       <option value="">Choose a technician..</option>
-                      {technicians.map(technician => {
+                      {this.state.technicians.map((technician) => {
                         return (
                           <option
-                            key={technician.id}
-                            value={technician.id}
+                            key={technician.employee_number}
+                            value={technician.employee_number}
                           >
                             {technician.name}
                           </option>
@@ -140,20 +166,23 @@ function ServiceAppointmentForm() {
                     </select>
                   </div>
                   <div className="form=floating mb-3">
-                    <textarea onChange={handleChange}
-                        value={service.reason}
+                    <input onChange={this.handleReasonChange}
+                        value={this.state.reason}
                         placeholder="Please explain your issue briefly"
                         required type="text"
                         name="reason"
                         id="reason"
-                        className="form-control">
-                    </textarea>
+                        className="form-control"/>
                     <label htmlFor="reason"></label>
                   </div>
+                  <div>
                   <div className="container">
                   <div className="col-md-12 text-center">
                   <button className="btn btn-primary">Create Appointment</button>
                   </div>
+                  </div>
+                  </div>
+                  <div className={submittedClass} id="success-message">Your appointment is confirmed!
                   </div>
                 </form>
               </div>
@@ -162,6 +191,8 @@ function ServiceAppointmentForm() {
         </div>
       );
     }
+}
+
 
 
 
