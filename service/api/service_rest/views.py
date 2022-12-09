@@ -82,27 +82,48 @@ def api_list_appointments(request):
         )
 
 
-@require_http_methods(['GET','PUT','DELETE'])
+@require_http_methods(['DELETE','GET','PUT'])
 def api_show_appointments(request, id):
     if request.method == "GET":
-        service = Service.objects.get(id=id)
-        return JsonResponse(
-            service,
-            encoder=AppointmentDetailEncoder,
-            safe=False
-        )
+        try:
+            service = Service.objects.get(id=id)
+            return JsonResponse(
+                service,
+                encoder=AppointmentDetailEncoder,
+                safe=False
+            )
+        except Service.DoesNotExist:
+            response = JsonResponse({"message:" "This appointment does not exist."})
+            response.status_code = 404
+            return response
     elif request.method == "DELETE":
-        count, _ = Service.objects.filter(id=id).delete()
-        return JsonResponse({"deleted": count > 0})
+        # count, _ = Service.objects.filter(id=id).delete()
+        # return JsonResponse({"deleted": count > 0})
+        try:
+            service = Service.objects.get(id=id)
+            service.delete()
+            return JsonResponse(
+                service,
+                encoder=AppointmentDetailEncoder,
+                safe = False,
+            )
+        except Service.DoesNotExist:
+            return JsonResponse({"message": 'The appointment you are tring to delete does not exist'})
+
     else:
-        content = json.loads(request.body)
-        Service.objects.filter(id=id).update(**content)
-        service = Service.objects.get(id=id)
-        return JsonResponse(
-            service,
-            encoder=AppointmentDetailEncoder,
-            safe=False,
-        )
+        try:
+            content = json.loads(request.body)
+            Service.objects.filter(id=id).update(**content)
+            service = Service.objects.get(id=id)
+            return JsonResponse(
+                service,
+                encoder=AppointmentDetailEncoder,
+                safe=False,
+            )
+        except Service.DoesNotExist:
+            response = JsonResponse({"message:" "This appointment does not exist."})
+            response.status_code = 404
+            return response
 
 
 @require_http_methods(['GET'])
