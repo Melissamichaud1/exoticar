@@ -5,7 +5,7 @@ function ModelForm() {
     const [model, setModel] = useState({
         name: "",
         picture_url: "",
-        manufacturer_id: [],
+        manufacturer_id: "",
     });
 
     const [manufacturers, setManufacturers] = useState([]);

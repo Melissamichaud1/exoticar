@@ -18,6 +18,7 @@ import TechForm from "./Service/TechForm";
 import CustomerForm from './Sales/CustomerForm';
 import SalesmanForm from './Sales/SalesmanForm';
 import SalesList from './Sales/SalesList';
+import SaleForm from './Sales/SaleForm';
 
 function App(props) {
   if (props === undefined) {
@@ -60,7 +61,7 @@ function App(props) {
         </Route>
         <Route path="sales">
             <Route path="" element={<SalesList/>} />
-            {/* <Route path="new" element={<SalesForm />} /> */}
+            <Route path="new" element={<SaleForm />} />
         </Route>
         </Routes>
       </div>
