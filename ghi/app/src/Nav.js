@@ -54,6 +54,42 @@ function Nav() {
                 </li>
               </ul>
             </li>
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Sales
+              </a>
+              <ul className="dropdown-menu">
+                <li className="nav-item">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/customers/new/"
+                  >
+                    Create a Customer
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/salesmen/new/"
+                  >
+                    Create a Salesman
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/sales/"
+                  >
+                    Sales list
+                  </NavLink>
+                </li>
+              </ul>
+              </li>
           </ul>
         </div>
       </div>
