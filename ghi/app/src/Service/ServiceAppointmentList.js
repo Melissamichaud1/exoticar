@@ -1,51 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { NavLink } from "react-router-dom"
 
-function ServiceAppointmentList() {
+class ServiceAppointmentList extends React.Component {
+    state = {
+        services: [],
+        autos: [],
+    }
 
-    const [services, setServices] = useState([]);
-    const fetchServices  = async () => {
+    async getServices() {
         const url = 'http://localhost:8080/api/service/';
         const response = await fetch(url);
         if (response.ok) {
             const data = await response.json();
             console.log(data);
-            setServices(data.services);
+            const services = data.services;
+            this.setState({services: services});
         } else {
             console.error(response);
         }
     }
 
-    const [autos, setAutos] = useState([]);
-    const fetchAutomobiles  = async () => {
+    async getAutomobiles() {
         const url = 'http://localhost:8100/api/automobiles/';
         const response = await fetch(url);
         if (response.ok) {
             const data = await response.json();
             console.log(data);
-            setAutos(data.autos);
+            const autos = data.autos;
+            this.setState({autos: autos});
         } else {
             console.error(response);
         }
     }
 
-    useEffect(() => {
-        fetchServices();
-        fetchAutomobiles();
-    }, []);
+   async componentDidMount() {
+    this.getServices();
+    this.getAutomobiles();
+   }
 
-    const cancelService = async (id) => {
-        const cancelUrl = `http://localhost:8080/api/service/${id}/`
+
+    async cancelService(event) {
+        const cancelUrl = `http://localhost:8080/api/service/${event}/`
         await fetch(cancelUrl, {method: 'DELETE'});
-        setServices(services.filter(function(service){return service.id !== id}))
-        // fetchServices()
+        this.getServices()
     }
 
-    const finishService = async (id) => {
-        const finishUrl = `http://localhost:8080/api/service/${id}/`
+    async finishService(event) {
+        const finishUrl = `http://localhost:8080/api/service/${event}/`
         const fetchConfig = {
             method: "PUT",
-            body: JSON.stringify(id),
+            body: JSON.stringify(event),
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -53,9 +57,8 @@ function ServiceAppointmentList() {
         const response = await fetch(finishUrl, fetchConfig);
     }
 
-
-
-    let vip = "d-none"
+    render () {
+        let is_vip = "d-none"
     return (
     <div className="container">
         <div className="col-md-12 text-center">
@@ -78,32 +81,29 @@ function ServiceAppointmentList() {
                 </tr>
             </thead>
             <tbody>
-                {services?.map(service => {
+                {this.state.services.map(service => {
                     let date = Date.parse(service.starts)
                         const newDate = Date(date)
                     return (
                         <tr key={service.id}>
-                            {autos?.map(auto => {
+                            {this.state.autos?.map(auto => {
                                 if (service.vin == auto.vin){
                                     return(
-                                        <td key={service.id}><img src="https://image.emojipng.com/675/36675.jpg" width="30" height="30"/></td>
+                                        <td key={service.id}><img src="https://image.emojipng.com/675/36675.jpg" width="70" height="50"/></td>
                                     )
-                                } else {
-                                    return(<td key={service.id}><img src="https://uxwing.com/wp-content/themes/uxwing/download/checkmark-cross/red-x-icon.png" width="30" height="30"/></td>
+                               } else {
+                                    return(
+                                        <td key={service.id}><img className={is_vip}/></td>
                                     )
-                                }
-                            })}
+
+                            }})}
                             <td>{ service.vin }</td>
                             <td>{ service.vehicle_owner }</td>
                             <td>{ newDate.toLocaleString()}</td>
                             <td>{ service.technician.name }</td>
                             <td>{ service.reason }</td>
-                            <td><button onClick={ () => cancelService(service.id)}
-                                className="btn btn-danger">Cancel</button></td>
-                            <td><button onClick={ () => finishService(service.id)}
-                            name="status"
-                            value={service.status}
-                            className="btn btn-success">Finished</button></td>
+                            <td><button onClick={ () => this.cancelService(service.id)} className="btn btn-danger">Cancel</button></td>
+                            <td><button onClick={ () => this.finishService(service.id)} className="btn btn-success">Finished</button></td>
                         </tr>
                     );
                 })}
@@ -114,6 +114,7 @@ function ServiceAppointmentList() {
 
 
 
+}
 }
 
 

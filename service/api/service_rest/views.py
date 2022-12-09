@@ -100,13 +100,15 @@ def api_show_appointments(request, id):
         # count, _ = Service.objects.filter(id=id).delete()
         # return JsonResponse({"deleted": count > 0})
         try:
-            service = Service.objects.get(id=id)
-            service.delete()
-            return JsonResponse(
-                service,
-                encoder=AppointmentDetailEncoder,
-                safe = False,
-            )
+            count, _ = Service.objects.filter(id=id).delete()
+            return JsonResponse({"deleted": count > 0})
+            # service = Service.objects.get(id=id)
+            # service.delete()
+            # return JsonResponse(
+            #     service,
+            #     encoder=AppointmentDetailEncoder,
+            #     safe = False,
+            # )
         except Service.DoesNotExist:
             return JsonResponse({"message": 'The appointment you are tring to delete does not exist'})
 

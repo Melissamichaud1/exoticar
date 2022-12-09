@@ -11,11 +11,7 @@ class ServiceAppointmentForm extends React.Component {
             reason: "",
             technicians: [],
         };
-        this.handleVinChange = this.handleVinChange.bind(this);
-        this.handleVehicleOwnerChange = this.handleVehicleOwnerChange.bind(this);
-        this.handleStartsChange = this.handleStartsChange.bind(this);
-        this.handleTechnicianChange = this.handleTechnicianChange.bind(this);
-        this.handleReasonChange = this.handleReasonChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -63,30 +59,14 @@ class ServiceAppointmentForm extends React.Component {
     }
 
 
-    handleVinChange(event) {
-        const value = event.target.value;
-        this.setState({ vin: value });
-    }
+    handleChange(event) {
+      const value = event.target.value;
+      const key = event.target.name;
+      const changeDict = {};
+      changeDict[key] = value;
+      this.setState(changeDict);
+  }
 
-    handleVehicleOwnerChange(event) {
-        const value = event.target.value;
-        this.setState({ vehicle_owner: value });
-    }
-
-    handleStartsChange(event) {
-        const value = event.target.value;
-        this.setState({ starts: value });
-    }
-
-    handleTechnicianChange(event) {
-        const value = event.target.value;
-        this.setState({ technician: value });
-    }
-
-    handleReasonChange(event) {
-        const value = event.target.value;
-        this.setState({ reason: value });
-    }
 
 
     render() {
@@ -112,7 +92,7 @@ class ServiceAppointmentForm extends React.Component {
                 <form onSubmit={this.handleSubmit} id="create-service-form">
                   <div className="form-floating mb-3">
                     <input
-                      onChange={this.handleVinChange}
+                      onChange={this.handleChange}
                       value={this.state.vin}
                       placeholder="vin"
                       required type="text"
@@ -124,7 +104,7 @@ class ServiceAppointmentForm extends React.Component {
                   </div>
                   <div className="form-floating mb-3">
                     <input
-                      onChange={this.handleVehicleOwnerChange}
+                      onChange={this.handleChange}
                       value={this.state.vehicle_owner}
                       placeholder="Vehicle Owner"
                       required type="text"
@@ -136,7 +116,7 @@ class ServiceAppointmentForm extends React.Component {
                   </div>
                   <div className="form-floating mb-3">
                     <input
-                      onChange={this.handleStartsChange}
+                      onChange={this.handleChange}
                       value={this.state.starts}
                       placeholder="Date and Time"
                       required type="datetime-local"
@@ -148,7 +128,7 @@ class ServiceAppointmentForm extends React.Component {
                   </div>
                   <div className="mb-3">
                     <select
-                      onChange={this.handleTechnicianChange}
+                      onChange={this.handleChange}
                       name="technician"
                       id="technician"
                       className={dropdownClasses} required>
@@ -166,7 +146,7 @@ class ServiceAppointmentForm extends React.Component {
                     </select>
                   </div>
                   <div className="form=floating mb-3">
-                    <input onChange={this.handleReasonChange}
+                    <input onChange={this.handleChange}
                         value={this.state.reason}
                         placeholder="Please explain your issue briefly"
                         required type="text"
@@ -182,9 +162,9 @@ class ServiceAppointmentForm extends React.Component {
                   </div>
                   </div>
                   </div>
-                  <div className={submittedClass} id="success-message">Your appointment is confirmed!
-                  </div>
                 </form>
+                <div className={submittedClass} id="success-message">Your appointment is confirmed!
+                  </div>
               </div>
             </div>
           </div>
