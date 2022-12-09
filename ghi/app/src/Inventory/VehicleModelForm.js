@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-function VehicleModelForm() {
+function ModelForm() {
 
-    const [vehicleModel, setVehicleModel] = useState({
+    const [model, setModel] = useState({
         name: "",
         picture_url: "",
-        manufacturer_id: [],
+        manufacturer_id: "",
     });
 
     const [manufacturers, setManufacturers] = useState([]);
@@ -25,13 +25,13 @@ function VehicleModelForm() {
     }, []);
 
     const handleChange = (event) => {
-        setVehicleModel({...vehicleModel, [event.target.name]: event.target.value});
+        setModel({...model, [event.target.name]: event.target.value});
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = {...vehicleModel}
-        const vehicleModelUrl = "http://localhost:8100/api/models/";
+        const data = {...model}
+        const modelUrl = "http://localhost:8100/api/models/";
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),
@@ -39,13 +39,13 @@ function VehicleModelForm() {
                 "Content-Type": "application/json",
             },
         };
-        const response = await fetch(vehicleModelUrl, fetchConfig);
+        const response = await fetch(modelUrl, fetchConfig);
         if (response.ok) {
-            const newvehicleModel = await response.json();
-            console.log(newvehicleModel);
-            setVehicleModel({ name: "", picture_url: "", manufacturer_id: ""});
+            const newModel = await response.json();
+            console.log(newModel);
+            setModel({ name: "", picture_url: "", manufacturer_id: ""});
         } else {
-            console.error("Error in creating vehicleModel")
+            console.error("Error in creating model")
         }
     };
 
@@ -59,7 +59,7 @@ function VehicleModelForm() {
                     <div className="form-floating mb-3">
                         <input
                         onChange={handleChange}
-                        value={vehicleModel.name}
+                        value={model.name}
                         placeholder="Name"
                         name="name"
                         id="name"
@@ -71,7 +71,7 @@ function VehicleModelForm() {
                     <div className="form-floating mb-3">
                         <input
                         onChange={handleChange}
-                        value={vehicleModel.picture_url}
+                        value={model.picture_url}
                         placeholder="Picture URL"
                         name="picture_url"
                         id="picture_url"
@@ -83,12 +83,12 @@ function VehicleModelForm() {
                     <div className="mb-3">
                     <select
                       onChange={handleChange}
-                      value={vehicleModel.manufacturer_id}
+                      value={model.manufacturer_id}
                       id="manufacturer_id"
                       name="manufacturer_id"
                       className="form-select"
                     >
-                      <option value="">Choose a manufacturer..</option>
+                      <option value="">Choose a manufacturer</option>
                       {manufacturers.map(manufacturer => {
                         return (
                           <option
@@ -109,4 +109,4 @@ function VehicleModelForm() {
     )
 }
 
-export default VehicleModelForm;
+export default ModelForm;

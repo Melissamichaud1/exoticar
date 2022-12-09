@@ -88,6 +88,14 @@ function Nav() {
                     Sales list
                   </NavLink>
                 </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/sales/new/"
+                  >
+                    New Sale
+                  </NavLink>
+                </li>
               </ul>
               </li>
               <li className="nav-item dropdown">

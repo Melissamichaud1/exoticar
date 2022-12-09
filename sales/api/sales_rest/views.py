@@ -103,7 +103,7 @@ def api_list_sales(request, autoumobile_vo_id=None):
 
         try:
             customer = content["customer"]
-            customer = Customer.objects.get(name=customer)
+            customer = Customer.objects.get(id=customer)
             content["customer"] = customer
         except Customer.DoesNotExist:
             response = JsonResponse(
@@ -113,7 +113,7 @@ def api_list_sales(request, autoumobile_vo_id=None):
             return response
         try:
             salesman = content["salesman"]
-            salesman = Salesman.objects.get(name=salesman)
+            salesman = Salesman.objects.get(employee_id=salesman)
             content["salesman"] = salesman
         except Salesman.DoesNotExist:
             response = JsonResponse(
@@ -122,8 +122,8 @@ def api_list_sales(request, autoumobile_vo_id=None):
             response.status_code = 400
             return response
         try:
-            auto_href = content["auto"]
-            auto = AutomobileVO.objects.get(import_href=auto_href)
+            vin = content["auto"]
+            auto = AutomobileVO.objects.get(vin=vin)
             if auto.for_sale == True:
                 auto.for_sale = False
                 auto.save()
