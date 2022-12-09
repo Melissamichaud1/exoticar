@@ -19,8 +19,6 @@ function SalesList() {
     loadSales();
   }, []);
 
-  console.log(sales)
-
     return (
       <table className="table table-striped">
         <thead>
@@ -40,7 +38,7 @@ function SalesList() {
                 <td>{sale.salesman.employee_id}</td>
                 <td>{sale.customer.name}</td>
                 <td>{sale.auto.vin}</td>
-                <td>{sale.price}</td>
+                <td>${sale.price}</td>
               </tr>
             );
           })}
