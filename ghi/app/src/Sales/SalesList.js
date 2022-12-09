@@ -3,19 +3,23 @@ import React, { useState, useEffect } from 'react';
 function SalesList() {
 
   const [sales, setSales] = useState([]);
+  const loadSales  = async () => {
+    const url = 'http://localhost:8090/api/sales/'
+    const response = await fetch(url);
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        setSales(data.sales);
+    } else {
+        console.error(response);
+    }
+}
 
   useEffect(() => {
-    async function loadSales() {
-      const response = await fetch("http://localhost:8090/api/sales/");
-      if (response.ok) {
-        const data = await response.json();
-        setSales(data.shoes);
-      } else {
-        console.error(response);
-      }
-    }
     loadSales();
-  },[])
+  }, []);
+
+  console.log(sales)
 
     return (
       <table className="table table-striped">
@@ -35,7 +39,7 @@ function SalesList() {
                 <td>{sale.salesman.name}</td>
                 <td>{sale.salesman.employee_id}</td>
                 <td>{sale.customer.name}</td>
-                <td>{sale.automobile.vin}</td>
+                <td>{sale.auto.vin}</td>
                 <td>{sale.price}</td>
               </tr>
             );
@@ -45,4 +49,5 @@ function SalesList() {
     );
   }
 
-  export default SalesList;
+
+export default SalesList;
