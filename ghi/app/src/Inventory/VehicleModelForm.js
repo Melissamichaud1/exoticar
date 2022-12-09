@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function VehicleModelForm() {
+
     const [vehicleModel, setVehicleModel] = useState({
         name: "",
         picture_url: "",

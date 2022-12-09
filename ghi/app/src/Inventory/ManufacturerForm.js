@@ -24,7 +24,7 @@ function ManufacturerForm() {
         if (response.ok) {
             const newManufacturer = await response.json();
             console.log(newManufacturer);
-            setmanufacturer({ name: ""});
+            setManufacturer({ name: ""});
         } else {
             console.error("Error in creating manufacturer")
         }
