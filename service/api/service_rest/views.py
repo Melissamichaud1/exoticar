@@ -97,21 +97,11 @@ def api_show_appointments(request, id):
             response.status_code = 404
             return response
     elif request.method == "DELETE":
-        # count, _ = Service.objects.filter(id=id).delete()
-        # return JsonResponse({"deleted": count > 0})
         try:
             count, _ = Service.objects.filter(id=id).delete()
             return JsonResponse({"deleted": count > 0})
-            # service = Service.objects.get(id=id)
-            # service.delete()
-            # return JsonResponse(
-            #     service,
-            #     encoder=AppointmentDetailEncoder,
-            #     safe = False,
-            # )
         except Service.DoesNotExist:
-            return JsonResponse({"message": 'The appointment you are tring to delete does not exist'})
-
+            return JsonResponse({"message": "Service does not exist"})
     else:
         try:
             content = json.loads(request.body)

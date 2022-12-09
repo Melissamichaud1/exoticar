@@ -58,7 +58,7 @@ class ServiceAppointmentList extends React.Component {
     }
 
     render () {
-        let is_vip = "d-none"
+    let is_vip = "d-none"
     return (
     <div className="container">
         <div className="col-md-12 text-center">
