@@ -82,23 +82,21 @@ def api_list_appointments(request):
         )
 
 
-@require_http_methods(['PUT','DELETE'])
+@require_http_methods(['GET','PUT','DELETE'])
 def api_show_appointments(request, id):
-    if request.method == 'DELETE':
-        try:
-            service = Service.objects.get(id=id)
-            service.delete()
-            return JsonResponse(
-                {'message': 'Appointment was deleted successfully'},
-                service,
-                encoder=AppointmentDetailEncoder,
-                safe = False,
-            )
-        except Service.DoesNotExist:
-            return JsonResponse({"message": 'The appointment you are tring to delete does not exist'})
+    if request.method == "GET":
+        service = Service.objects.get(id=id)
+        return JsonResponse(
+            service,
+            encoder=AppointmentDetailEncoder,
+            safe=False
+        )
+    elif request.method == "DELETE":
+        count, _ = Service.objects.filter(id=id).delete()
+        return JsonResponse({"deleted": count > 0})
     else:
         content = json.loads(request.body)
-        Service.object.filter(id=id).update(**content)
+        Service.objects.filter(id=id).update(**content)
         service = Service.objects.get(id=id)
         return JsonResponse(
             service,
