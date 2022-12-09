@@ -7,7 +7,7 @@ import AutomobileList from "./Inventory/AutomobileList";
 import ManufacturerForm from "./Inventory/ManufacturerForm";
 import ManufacturerList from "./Inventory/ManufacturerList";
 
-import VehicleModelForm from "./Inventory/VehicleModelForm";
+import ModelForm from "./Inventory/VehicleModelForm";
 import ModelList from "./Inventory/VehicleModelList";
 
 import ServiceAppointmentList from "./Service/ServiceAppointmentList";
@@ -39,7 +39,7 @@ function App(props) {
         </Route>
         <Route path="models">
           <Route path="" element={<ModelList />} />
-          <Route path="new" element={<VehicleModelForm />} />
+          <Route path="new" element={<ModelForm />} />
         </Route>
         <Route path="service">
             <Route path="" element={<ServiceAppointmentList />} />
