@@ -27,21 +27,12 @@ class ServiceAppointmentForm extends React.Component {
 
         const servicesUrl = "http://localhost:8080/api/service/";
         const fetchConfig = {
-<<<<<<< HEAD
-            method: "POST",
+            method: "post",
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json",
             },
         };
-=======
-            // method: "POST",
-            // body: JSON.stringify(data),
-            // headers: {
-            //   "Content-Type": "application/json",
-            // },
-          };
->>>>>>> main
 
         const response = await fetch(servicesUrl, fetchConfig);
         if (response.ok) {

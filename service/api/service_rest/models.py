@@ -16,10 +16,6 @@ class Technician(models.Model):
     name = models.CharField(max_length=50)
     employee_number = models.PositiveBigIntegerField(unique=True)
 
-    def get_api_url(self):
-        return reverse("api_technician", kwargs={"pk": self.pk})
-
-
 # Represents user who wants to create a service appt
 class Service(models.Model):
     vin = models.CharField(max_length=20)
@@ -29,17 +25,8 @@ class Service(models.Model):
     finished = models.BooleanField(default=False)
     vip = models.BooleanField(default=False)
 
-    auto = models.ForeignKey(
-        AutomobileVO,
-        related_name="services",
-        on_delete=models.CASCADE,
-    )
-
     technician = models.ForeignKey(
         Technician,
         related_name="technicians",
         on_delete=models.PROTECT,
     )
-
-    def get_api_url(self):
-        return reverse("api_service", kwargs={"pk": self.pk})
