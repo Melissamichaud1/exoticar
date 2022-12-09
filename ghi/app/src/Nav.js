@@ -67,7 +67,7 @@ function Nav() {
                 <li className="nav-item">
                   <NavLink
                     className="dropdown-item"
-                    to="/customers/new"
+                    to="/customers/new/"
                   >
                     Create a Customer
                   </NavLink>
@@ -75,9 +75,17 @@ function Nav() {
                 <li className="nav-item">
                   <NavLink
                     className="dropdown-item"
-                    to="/salesmen/new"
+                    to="/salesmen/new/"
                   >
                     Create a Salesman
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/sales/"
+                  >
+                    Sales list
                   </NavLink>
                 </li>
               </ul>

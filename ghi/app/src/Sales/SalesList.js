@@ -21,24 +21,22 @@ function SalesList() {
       <table className="table table-striped">
         <thead>
           <tr>
-            <th>Manufacturer</th>
-            <th>Model</th>
-            <th>Color</th>
-            <th>Bin</th>
-            <th>Image</th>
+            <th>Salesman</th>
+            <th>Employee ID</th>
+            <th>Customer</th>
+            <th>VIN</th>
+            <th>Sale price</th>
           </tr>
         </thead>
         <tbody>
-          {shoes?.map(shoe => {
+          {sales?.map(sale => {
             return (
-              <tr key={shoe.id}>
-                <td>{ shoe.manufacturer }</td>
-                <td>{ shoe.model_name }</td>
-                <td><svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill={ shoe.color } className="bi bi-square-fill" viewBox="0 0 16 16">
-                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z"/></svg></td>
-                <td>{ shoe.bin.closet_name }</td>
-                <td><img src={ shoe.picture_url } width="80" height="80"/></td>
-                <td><button onClick={() => deleteShoe(shoe.id)}>Delete Shoe</button></td>
+              <tr key={sale.id}>
+                <td>{sale.salesman.name}</td>
+                <td>{sale.salesman.employee_id}</td>
+                <td>{sale.customer.name}</td>
+                <td>{sale.automobile.vin}</td>
+                <td>{sale.price}</td>
               </tr>
             );
           })}
@@ -47,4 +45,4 @@ function SalesList() {
     );
   }
 
-  export default ShoesList;
+  export default SalesList;
