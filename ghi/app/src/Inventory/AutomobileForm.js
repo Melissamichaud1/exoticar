@@ -17,7 +17,7 @@ function AutomobileForm() {
         if (response.ok) {
             setModels(data.models);
         } else {
-            console.error(response);
+            console.error("Error in fetching models, try again.");
         }
     }
 
@@ -32,7 +32,6 @@ function AutomobileForm() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = {...automobile}
-        console.log(data)
         const automobileUrl = "http://localhost:8100/api/automobiles/";
         const fetchConfig = {
             method: "post",
@@ -43,11 +42,10 @@ function AutomobileForm() {
         };
         const response = await fetch(automobileUrl, fetchConfig);
         if (response.ok) {
-            const newautomobile = await response.json();
-            console.log(newautomobile);
+            await response.json();
             setAutomobiles({ color: "", year: "", vin: "", model_id: ""});
         } else {
-            console.error("Error in creating automobile")
+            console.error("Error in creating automobile, try again.")
         }
     };
 

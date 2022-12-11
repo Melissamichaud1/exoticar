@@ -6,6 +6,7 @@ class ServiceAppointmentList extends React.Component {
         services: [],
         autos: [],
         service: "",
+        error: "",
     }
 
     async componentDidMount() {
@@ -18,11 +19,10 @@ class ServiceAppointmentList extends React.Component {
         const response = await fetch(url);
         if (response.ok) {
             const data = await response.json();
-            console.log(data);
             const services = data.services;
             this.setState({services: services});
         } else {
-            console.error(response);
+            this.setState({error: "Error in fetching list of services, try again."})
         }
     }
 
@@ -31,11 +31,10 @@ class ServiceAppointmentList extends React.Component {
         const response = await fetch(url);
         if (response.ok) {
             const data = await response.json();
-            console.log(data);
             const autos = data.autos;
             this.setState({autos: autos});
         } else {
-            console.error(response);
+            this.setState({error: "Error in fetching list of automobiles, try again."})
         }
     }
 
@@ -89,8 +88,10 @@ class ServiceAppointmentList extends React.Component {
                 </tr>
             </thead>
                 <tbody>
+                <tr>
                     <th><img src="https://w7.pngwing.com/pngs/22/247/png-transparent-computer-icons-computer-servers-vip-miscellaneous-text-rectangle.png" width="100" height="80"/></th>
                     <th><img src="https://cdn.pixabay.com/photo/2014/09/26/10/45/delete-462216_1280.png" width="100" height="80"/></th>
+                </tr>
                 </tbody>
         </table>
         </div>
@@ -114,7 +115,7 @@ class ServiceAppointmentList extends React.Component {
                         const newDate = Date(date)
                     return (
                         <tr key={service.id}>
-                        {this.VIP(service.vin)}
+                            {this.VIP(service.vin)}
                             <td>{ service.vin }</td>
                             <td>{ service.vehicle_owner }</td>
                             <td>{ newDate.toLocaleString()}</td>

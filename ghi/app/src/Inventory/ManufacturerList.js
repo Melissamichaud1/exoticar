@@ -9,10 +9,9 @@ function ManufacturersList() {
     const response = await fetch(url);
     if (response.ok) {
         const data = await response.json();
-        console.log(data);
         setManufacturers(data.manufacturers);
     } else {
-        console.error(response);
+        console.error("Error in fetching manufacturers, try again.");
     }
 }
 

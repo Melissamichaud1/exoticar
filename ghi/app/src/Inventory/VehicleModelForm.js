@@ -16,7 +16,7 @@ function ModelForm() {
         if (response.ok) {
             setManufacturers(data.manufacturers);
         } else {
-            console.error(response);
+            console.error("Error in fetching manufacturers, try again.");
         }
     }
 
@@ -41,11 +41,10 @@ function ModelForm() {
         };
         const response = await fetch(modelUrl, fetchConfig);
         if (response.ok) {
-            const newModel = await response.json();
-            console.log(newModel);
+            await response.json();
             setModel({ name: "", picture_url: "", manufacturer_id: ""});
         } else {
-            console.error("Error in creating model")
+            console.error("Error in creating model, try again.")
         }
     };
 

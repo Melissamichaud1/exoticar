@@ -3,7 +3,8 @@ import React from "react"
 class ServiceHistoryList extends React.Component {
     state = {
         search: "",
-        services: []
+        error: "",
+        services: [],
     };
 
     async componentDidMount(){
@@ -17,6 +18,8 @@ class ServiceHistoryList extends React.Component {
         if (response.ok) {
             const data = await response.json();
             this.setState({services: data.services})
+        } else {
+            this.setState({error: "Error fetching service history, try again."})
         }
     }
 

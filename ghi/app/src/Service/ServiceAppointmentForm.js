@@ -10,16 +10,32 @@ class ServiceAppointmentForm extends React.Component {
             technician: "",
             reason: "",
             technicians: [],
+            error: "",
+            submitted: false,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    async componentDidMount() {
+      const technicianUrl = "http://localhost:8080/api/technicians/";
+
+      const response = await fetch(technicianUrl);
+
+      if (response.ok) {
+          const data = await response.json();
+          this.setState({ technicians: data.technicians });
+      } else {
+        this.setState({error: "Error in fetching technicians, try again."})
+      }
+  }
+
     async handleSubmit(event) {
         event.preventDefault();
         const data = { ...this.state };
         delete data.technicians;
-        console.log(data);
+        delete data.error;
+        delete data.submitted;
 
         const servicesUrl = "http://localhost:8080/api/service/";
         const fetchConfig = {
@@ -32,8 +48,7 @@ class ServiceAppointmentForm extends React.Component {
 
         const response = await fetch(servicesUrl, fetchConfig);
         if (response.ok) {
-            const newService = await response.json();
-            console.log(newService);
+            await response.json();
 
             const cleared = {
                 vin: "",
@@ -43,18 +58,9 @@ class ServiceAppointmentForm extends React.Component {
                 reason: "",
             };
             this.setState(cleared);
-            }
-        }
-
-
-    async componentDidMount() {
-        const technicianUrl = "http://localhost:8080/api/technicians/";
-
-        const response = await fetch(technicianUrl);
-
-        if (response.ok) {
-            const data = await response.json();
-            this.setState({ technicians: data.technicians });
+            this.setState({ submitted: true })
+        } else {
+          this.setState({error: "Error in submitting the form, try again."})
         }
     }
 
@@ -70,17 +76,13 @@ class ServiceAppointmentForm extends React.Component {
 
 
     render() {
-        let notSubmittedClass = "not-submitted";
         let submittedClass = "alert alert-success d-none mb-0";
 
-        if (this.state.success === true) {
-            notSubmittedClass = "not-submitted d-none";
+        if (this.state.submitted === true) {
             submittedClass = "alert alert-success mb-0";
         }
-        let spinnerClasses = "d-flex justify-content-center mb-3";
         let dropdownClasses = "form-select d-none";
         if (this.state.technicians.length > 0 ) {
-            spinnerClasses = "d-flex justify-content-center mb-3";
             dropdownClasses = "form-select";
         }
     return (

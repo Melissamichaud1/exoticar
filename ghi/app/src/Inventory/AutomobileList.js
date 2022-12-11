@@ -10,6 +10,8 @@ const fetchData = async () => {
     if (response.ok) {
         const data = await response.json();
         setAutomobiles(data.autos)
+    } else {
+        console.error("Error in fetching automobiles, try again.")
     }
 }
 
