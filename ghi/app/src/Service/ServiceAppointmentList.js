@@ -5,7 +5,13 @@ class ServiceAppointmentList extends React.Component {
     state = {
         services: [],
         autos: [],
+        service: "",
     }
+
+    async componentDidMount() {
+            await this.getServices();
+            await this.getAutomobiles();
+       }
 
     async getServices() {
         const url = 'http://localhost:8080/api/service/';
@@ -33,11 +39,6 @@ class ServiceAppointmentList extends React.Component {
         }
     }
 
-   async componentDidMount() {
-    this.getServices();
-    this.getAutomobiles();
-   }
-
 
     async cancelService(event) {
         const cancelUrl = `http://localhost:8080/api/service/${event}/`
@@ -49,16 +50,25 @@ class ServiceAppointmentList extends React.Component {
         const finishUrl = `http://localhost:8080/api/service/${event}/`
         const fetchConfig = {
             method: "PUT",
-            body: JSON.stringify(event),
+            body: JSON.stringify({finished: true}),
             headers: {
                 'Content-Type': 'application/json',
             },
         };
-        const response = await fetch(finishUrl, fetchConfig);
+        await fetch(finishUrl, fetchConfig);
+        this.getServices()
+    }
+
+    VIP = (serviceVIN) => {
+        let vipStatus = this.state.autos.find((autoVIN) => autoVIN.vin === serviceVIN)
+        if (vipStatus) {
+            return (<td><img src="https://w7.pngwing.com/pngs/22/247/png-transparent-computer-icons-computer-servers-vip-miscellaneous-text-rectangle.png" width="70" height="50"/></td>)
+        } else {
+            return (<td><img src="https://cdn.pixabay.com/photo/2014/09/26/10/45/delete-462216_1280.png" width="70" height="50"/></td>)
+        }
     }
 
     render () {
-    let is_vip = "d-none"
     return (
     <div className="container">
         <div className="col-md-12 text-center">
@@ -69,6 +79,22 @@ class ServiceAppointmentList extends React.Component {
         <button type="button" className="btn btn-success"><NavLink style={{color:"white"}} className="nav-link" aria-current="page" to="/service/history">Service History</NavLink></button> &nbsp;&nbsp;&nbsp;
         <button type="button" className="btn btn-success"><NavLink style={{color:"white"}} className="nav-link" aria-current="page" to="/technicians/new">Create a Technician</NavLink></button> &nbsp;&nbsp;&nbsp;
         </div>
+        &nbsp;&nbsp;&nbsp;
+        <div className="col-md-12 text-center">
+        <table className="table table-striped">
+            <thead>
+                <tr>
+                    <th>Customer is a VIP</th>
+                    <th>Customer is not a VIP</th>
+                </tr>
+            </thead>
+                <tbody>
+                    <th><img src="https://w7.pngwing.com/pngs/22/247/png-transparent-computer-icons-computer-servers-vip-miscellaneous-text-rectangle.png" width="100" height="80"/></th>
+                    <th><img src="https://cdn.pixabay.com/photo/2014/09/26/10/45/delete-462216_1280.png" width="100" height="80"/></th>
+                </tbody>
+        </table>
+        </div>
+        <div className="col-md-12 text-center">
         <table className="table table-striped">
             <thead>
                 <tr>
@@ -78,25 +104,17 @@ class ServiceAppointmentList extends React.Component {
                     <th>Date and Time of Appt</th>
                     <th>Technician</th>
                     <th>Reason</th>
+                    <th>Cancel Appt</th>
+                    <th>Completed Appt</th>
                 </tr>
             </thead>
             <tbody>
-                {this.state.services.map(service => {
+                {this.state.services.filter((service) => service.finished == false).map((service) => {
                     let date = Date.parse(service.starts)
                         const newDate = Date(date)
                     return (
                         <tr key={service.id}>
-                            {this.state.autos?.map(auto => {
-                                if (service.vin == auto.vin){
-                                    return(
-                                        <td key={service.id}><img src="https://image.emojipng.com/675/36675.jpg" width="70" height="50"/></td>
-                                    )
-                               } else {
-                                    return(
-                                        <td key={service.id}><img className={is_vip}/></td>
-                                    )
-
-                            }})}
+                        {this.VIP(service.vin)}
                             <td>{ service.vin }</td>
                             <td>{ service.vehicle_owner }</td>
                             <td>{ newDate.toLocaleString()}</td>
@@ -109,8 +127,9 @@ class ServiceAppointmentList extends React.Component {
                 })}
             </tbody>
         </table>
+        </div>
     </div>
-    )
+    );
 
 
 

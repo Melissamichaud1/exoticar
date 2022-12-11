@@ -5,10 +5,10 @@ from django.urls import reverse
 
 # Inventory -> models.py -> Automobile model
 class AutomobileVO(models.Model):
-    color = models.CharField(max_length=50)
-    year = models.PositiveSmallIntegerField()
+    # color = models.CharField(max_length=50)
+    # year = models.PositiveSmallIntegerField()
     vin = models.CharField(max_length=20)
-    import_href = models.CharField(max_length=200, unique=True, null=True)
+    # import_href = models.CharField(max_length=200, unique=True, null=True)
 # Remove unnecessary ones (Kai)
 
 # Create a technician
@@ -23,7 +23,7 @@ class Service(models.Model):
     starts = models.DateTimeField()
     reason = models.CharField(max_length=200)
     finished = models.BooleanField(default=False)
-    vip = models.BooleanField(default=False)
+    # vip = models.BooleanField(default=False)
 
     technician = models.ForeignKey(
         Technician,

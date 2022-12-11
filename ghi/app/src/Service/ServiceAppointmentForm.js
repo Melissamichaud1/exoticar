@@ -15,6 +15,17 @@ class ServiceAppointmentForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    async componentDidMount() {
+      const technicianUrl = "http://localhost:8080/api/technicians/";
+
+      const response = await fetch(technicianUrl);
+
+      if (response.ok) {
+          const data = await response.json();
+          this.setState({ technicians: data.technicians });
+      }
+    }
+
     async handleSubmit(event) {
         event.preventDefault();
         const data = { ...this.state };
@@ -47,17 +58,6 @@ class ServiceAppointmentForm extends React.Component {
         }
 
 
-    async componentDidMount() {
-        const technicianUrl = "http://localhost:8080/api/technicians/";
-
-        const response = await fetch(technicianUrl);
-
-        if (response.ok) {
-            const data = await response.json();
-            this.setState({ technicians: data.technicians });
-        }
-    }
-
 
     handleChange(event) {
       const value = event.target.value;
@@ -70,13 +70,6 @@ class ServiceAppointmentForm extends React.Component {
 
 
     render() {
-        let notSubmittedClass = "not-submitted";
-        let submittedClass = "alert alert-success d-none mb-0";
-
-        if (this.state.success === true) {
-            notSubmittedClass = "not-submitted d-none";
-            submittedClass = "alert alert-success mb-0";
-        }
         let spinnerClasses = "d-flex justify-content-center mb-3";
         let dropdownClasses = "form-select d-none";
         if (this.state.technicians.length > 0 ) {
@@ -163,8 +156,6 @@ class ServiceAppointmentForm extends React.Component {
                   </div>
                   </div>
                 </form>
-                <div className={submittedClass} id="success-message">Your appointment is confirmed!
-                  </div>
               </div>
             </div>
           </div>
