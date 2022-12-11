@@ -14,12 +14,12 @@ Team:
 
 ## Service microservice
 
-**_Service API_**: RESTful API to handle automobile service appointments.
-**_Service Poller_**: Poller to poll the **Inventory API** for manufacturer, vehiclemodel and automobile.
-**Django**: Backend models, views, urls. Views have complete CRUD functions for service appointments and technicians. Settings was edited to ensure Django app and project are linked, and added CORS permissions.
-**Inventory** **API**: Provides **Manufacturer**, **VehicleModel** and **Automobile** RESTful API endpoints.
-**Database**: PostgreSQL database that holds the data of all microservices.
-**React**: React-based front-end application to interact with services.
+- **_Service API_**: RESTful API to handle automobile service appointments.
+- **_Service Poller_**: Poller to poll the **Inventory API** for manufacturer, vehiclemodel and automobile.
+- **Django**: Backend models, views, urls. Views have complete CRUD functions for service appointments and technicians. Settings was edited to ensure Django app and project are linked, and added CORS permissions.
+- **Inventory** **API**: Provides **Manufacturer**, **VehicleModel** and **Automobile** RESTful API endpoints.
+- **Database**: PostgreSQL database that holds the data of all microservices.
+- **React**: React-based front-end application to interact with services.
 
 - Class components were utilized to create Service appointments, list service appointments, list service history, and create a technician.
 
