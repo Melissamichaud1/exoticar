@@ -1,16 +1,16 @@
 import React from "react"
 
 class ServiceHistoryList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            search: "",
-            services: []
-        };
-        this.handleSearchChange = this.handleSearchChange.bind(this);
-    }
+    state = {
+        search: "",
+        services: []
+    };
 
     async componentDidMount(){
+        await this.serviceHistory();
+    }
+
+    async serviceHistory() {
         const url = 'http://localhost:8080/api/service/'
         const response = await fetch(url);
 
@@ -20,7 +20,7 @@ class ServiceHistoryList extends React.Component {
         }
     }
 
-    handleSearchChange(event) {
+    handleSearchChange = (event) => {
         const value = event.target.value;
         this.setState({ search: value })
     }
@@ -28,14 +28,16 @@ class ServiceHistoryList extends React.Component {
     render(){
         return (
                 <div>
-                    <div>&nbsp;</div>
-                    <input onChange={this.handleSearchChange} value={this.state.search} type="search" id="form1" className="form-control" placeholder="Search VIN"/>
-
+                &nbsp;&nbsp;&nbsp;
+                    <div class="input-group">
+                    <input onChange={this.handleSearchChange} type="search" className="form-control" placeholder="Search VIN"/>
+                </div>
+                <div className="col-md-12 text-center">
                     <h2 className="display-5 fw-bold">Service History</h2>
                     <table className="table table-striped">
                         <thead>
                             <tr>
-                                <th>Vin</th>
+                                <th>VIN</th>
                                 <th>Owner</th>
                                 <th>Date and Time of Appt</th>
                                 <th>Technician</th>
@@ -43,24 +45,13 @@ class ServiceHistoryList extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.services.map(service => {
+                            {this.state.services.filter((service) => service.vin.includes(this.state.search) && service.finished == true).map((service) => {
 
                                 let date = Date.parse(service.starts)
                                 const newDate = Date(date)
 
-                                let finished = 'd-none'
-                                if (service.finished == true) {
-                                    finished = ''
-                                }
-                                let search_bar = 'd-none'
-                                if(this.state.search == ''){
-                                    search_bar = ''
-                                } else if (service.vin.includes(this.state.search)){
-                                    search_bar = ''
-                                }
-
                                 return(
-                                <tr className={[search_bar, finished].join(" ")} key={service.id}>
+                                <tr key={service.id}>
                                     <td>{service.vin}</td>
                                     <td>{service.vehicle_owner}</td>
                                     <td>{ newDate.toLocaleString()}</td>
@@ -71,6 +62,7 @@ class ServiceHistoryList extends React.Component {
                             })}
                         </tbody>
                     </table>
+                    </div>
                 </div>
         )
     }
