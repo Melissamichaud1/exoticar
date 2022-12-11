@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
+
 class AutomobileVO(models.Model):
     vin = models.CharField(max_length=20)
 
@@ -16,7 +17,6 @@ class Service(models.Model):
     starts = models.DateTimeField()
     reason = models.CharField(max_length=200)
     finished = models.BooleanField(default=False)
-
 
     technician = models.ForeignKey(
         Technician,

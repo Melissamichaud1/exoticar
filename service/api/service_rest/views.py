@@ -13,6 +13,7 @@ from .encoders import (
 
 from .models import Technician, AutomobileVO, Service
 
+
 @require_http_methods(["GET", "POST"])
 def api_list_technician(request):
     if request.method == "GET":
@@ -25,16 +26,13 @@ def api_list_technician(request):
         try:
             content = json.loads(request.body)
             technician = Technician.objects.create(**content)
-            return JsonResponse(
-                technician,
-                encoder=TechnicianDetailEncoder,
-                safe=False
-            )
+            return JsonResponse(technician, encoder=TechnicianDetailEncoder, safe=False)
         except AutomobileVO.DoesNotExist:
             return JsonResponse(
                 {"message": "Error in creating technician, try again."},
                 status=400,
             )
+
 
 @require_http_methods(["DELETE", "GET", "PUT"])
 def api_show_technician(request, id):
@@ -44,13 +42,13 @@ def api_show_technician(request, id):
             return JsonResponse(
                 technician,
                 encoder=TechnicianDetailEncoder,
-                safe = False,
+                safe=False,
             )
         except Technician.DoesNotExist:
             return JsonResponse(
-                {"message": 'Error in fetching technician, try again.'},
+                {"message": "Error in fetching technician, try again."},
                 status=400,
-                )
+            )
     elif request.method == "DELETE":
         try:
             count, _ = Technician.objects.filter(id=id).delete()
@@ -68,11 +66,11 @@ def api_show_technician(request, id):
                 safe=False,
             )
         except Technician.DoesNotExist:
-            response = JsonResponse({"message": "Technician does not exist, try again!"})
+            response = JsonResponse(
+                {"message": "Technician does not exist, try again!"}
+            )
             response.status_code = 404
             return response
-
-
 
 
 @require_http_methods(["GET", "POST"])
@@ -89,9 +87,7 @@ def api_list_appointments(request):
             technician = Technician.objects.get(employee_number=content["technician"])
             content["technician"] = technician
         except Technician.DoesNotExist:
-            return JsonResponse(
-                {"message": "Invalid technician, try again!"}
-            )
+            return JsonResponse({"message": "Invalid technician, try again!"})
         try:
             service = Service.objects.create(**content)
             return JsonResponse(
@@ -107,7 +103,7 @@ def api_list_appointments(request):
             return response
 
 
-@require_http_methods(['DELETE','GET','PUT'])
+@require_http_methods(["DELETE", "GET", "PUT"])
 def api_show_appointments(request, id):
     if request.method == "GET":
         try:
@@ -118,7 +114,9 @@ def api_show_appointments(request, id):
                 safe=False,
             )
         except Service.DoesNotExist:
-            response = JsonResponse({"message:" "This appointment does not exist, try again!"})
+            response = JsonResponse(
+                {"message:" "This appointment does not exist, try again!"}
+            )
             response.status_code = 404
             return response
     elif request.method == "DELETE":
@@ -138,19 +136,18 @@ def api_show_appointments(request, id):
                 safe=False,
             )
         except Service.DoesNotExist:
-            response = JsonResponse({"message:" "This appointment does not exist, try again!"})
+            response = JsonResponse(
+                {"message:" "This appointment does not exist, try again!"}
+            )
             response.status_code = 404
             return response
 
 
-@require_http_methods(['GET'])
+@require_http_methods(["GET"])
 def api_automobile(request):
-    if request.method == 'GET':
+    if request.method == "GET":
         autos = AutomobileVO.objects.all()
-        return JsonResponse(
-            {'autos': autos},
-            encoder=AutomobileVOEncoder
-        )
+        return JsonResponse({"autos": autos}, encoder=AutomobileVOEncoder)
     else:
         response = JsonResponse({"message": "Automobile does not exist, try again!"})
         response.status_code = 404
