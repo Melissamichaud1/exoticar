@@ -163,13 +163,9 @@ class ServiceAppointmentForm extends React.Component {
                   <label htmlFor="reason"></label>
                 </div>
                 <div>
-                  <div className="container">
-                    <div className="col-md-12 text-center">
-                      <button className="btn btn-primary">
-                        Create Appointment
-                      </button>
-                    </div>
-                  </div>
+                  <button className="btn btn-primary">
+                    Create Appointment
+                  </button>
                 </div>
               </form>
               <div className={submittedClass} id="success-message">
