@@ -10,8 +10,15 @@ function SaleForm() {
     });
 
     const [automobiles, setAutomobiles] = useState([]);
-    const loadAutos  = async () => {
-        const autosUrl = 'http://localhost:8100/api/automobiles/'
+
+    const [salesmen, setSalesmen] = useState([]);
+
+    const [customers, setCustomers] = useState([]);
+
+
+    useEffect(() => {
+      const loadAutos  = async () => {
+        const autosUrl = 'http://localhost:8090/api/forsale/'
         const response = await fetch(autosUrl);
         if (response.ok) {
             const data = await response.json();
@@ -19,10 +26,8 @@ function SaleForm() {
         } else {
             console.error(response);
         }
-    }
-
-    const [salesmen, setSalesmen] = useState([]);
-    const loadSalesmen  = async () => {
+      }
+      const loadSalesmen  = async () => {
         const salesmenUrl = 'http://localhost:8090/api/salesmen/'
         const response = await fetch(salesmenUrl);
         if (response.ok) {
@@ -31,10 +36,8 @@ function SaleForm() {
         } else {
             console.error(response);
         }
-    }
-
-    const [customers, setCustomers] = useState([]);
-    const loadCustomers = async () => {
+      }
+      const loadCustomers = async () => {
         const customerUrl = 'http://localhost:8090/api/customers/'
         const response = await fetch(customerUrl);
         if (response.ok) {
@@ -43,13 +46,11 @@ function SaleForm() {
         } else {
             console.error(response);
         }
-    }
-
-    useEffect(() => {
-        loadAutos();
-        loadSalesmen();
-        loadCustomers();
-      }, []);
+      }
+      loadAutos();
+      loadSalesmen();
+      loadCustomers();
+    }, []);
 
 
     const handleChange = (event) => {
@@ -73,6 +74,7 @@ function SaleForm() {
             const newsale = await response.json();
             console.log(newsale);
             setSale({auto: "", salesman: "", customer: "", price: "",});
+            setAutomobiles((automobiles.filter((auto) => (auto.vin !== newsale.auto.vin))))
         } else {
             console.error("Error in creating sale")
         }
@@ -95,13 +97,13 @@ function SaleForm() {
                       className="form-select"
                     >
                       <option value="">Choose an automobile</option>
-                      {automobiles?.map(automobile => {
+                      {automobiles?.map(auto => {
                         return (
                           <option
-                            key={automobile.href}
-                            value={automobile.vin}
+                            key={auto.vin}
+                            value={auto.vin}
                           >
-                            {automobile.model.name}
+                            {auto.model}
                           </option>
                         );
                       })}
@@ -141,7 +143,7 @@ function SaleForm() {
                         return (
                           <option
                             key={customer.id}
-                            value={customer.id}
+                            value={customer.name}
                           >
                             {customer.name}
                           </option>

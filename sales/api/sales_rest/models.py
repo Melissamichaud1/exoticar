@@ -24,7 +24,7 @@ class AutomobileVO(models.Model):
     year = models.PositiveSmallIntegerField()
     vin = models.CharField(max_length=17)
     import_href = models.CharField(max_length=200, null=True)
-    for_sale = models.BooleanField(default=True)
+    model = models.CharField(max_length=100)
 
     def get_api_url(self):
         return reverse("api_automobile_vo", kwargs={"pk": self.id})

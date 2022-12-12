@@ -6,6 +6,7 @@ from .encoders import (
     SalesmanEncoder,
     SaleEncoder,
     CustomerEncoder,
+    AutomobileVOEncoder
 )
 from .models import Sale, Salesman, Customer, AutomobileVO
 
@@ -136,7 +137,7 @@ def api_list_sales(request, autoumobile_vo_id=None):
 
         try:
             customer = content["customer"]
-            customer = Customer.objects.get(id=customer)
+            customer = Customer.objects.get(name=customer)
             content["customer"] = customer
         except Customer.DoesNotExist:
             response = JsonResponse(
@@ -157,11 +158,11 @@ def api_list_sales(request, autoumobile_vo_id=None):
         try:
             vin = content["auto"]
             auto = AutomobileVO.objects.get(vin=vin)
-            if auto.for_sale == True:
-                auto.for_sale = False
-                auto.save()
-            else:
-                return JsonResponse({"message": "This car has already been sold"}, safe=False)
+            # if auto.for_sale == True:
+            #     auto.for_sale = False
+            #     auto.save()
+            # else:
+            #     return JsonResponse({"message": "This car has already been sold"}, safe=False)
             content["auto"] = auto
         except AutomobileVO.DoesNotExist:
             response = JsonResponse(
@@ -176,3 +177,14 @@ def api_list_sales(request, autoumobile_vo_id=None):
             encoder=SaleEncoder,
             safe=False,
             )
+
+
+@require_http_methods(["GET"])
+def api_list_for_sale(request):
+    if request.method == "GET":
+        autos = AutomobileVO.objects.filter(sales__isnull=True)
+        return JsonResponse(
+            {"autos": autos},
+            encoder=AutomobileVOEncoder,
+            safe=False,
+        )
