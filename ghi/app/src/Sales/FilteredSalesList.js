@@ -48,17 +48,10 @@ function SalesBySalesmen() {
     setSalesman(event.target.value);
     }
 
-
-
-    console.log({"this is the selected salesman": salesman});
-    console.log({"this is the sales list": sales});
-    console.log({"this is the list of salesmen": [...salesmen]});
-
-
     return (
         <>
     <div>
-        <h1>Salesman history</h1>
+        <h1>Salesman sale history</h1>
         <div className="mb-3">
             <select
             onChange={handleSalesmanSelect}

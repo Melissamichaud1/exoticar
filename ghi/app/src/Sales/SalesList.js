@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink } from "react-router-dom";
 
 function SalesList() {
 
@@ -20,7 +21,22 @@ function SalesList() {
   }, []);
 
     return (
-        <>
+      <div className="container">
+      <div className="col-md-12 text-center">
+        <h2 className="display-5 fw-bold">List of All Sales</h2>
+      </div>
+      <div className="col-md-12 text-center">
+        <button type="button" className="btn btn-success">
+          <NavLink
+            style={{ color: "white" }}
+            className="nav-link"
+            aria-current="page"
+            to="/sales/new"
+          >
+            Record an new sale
+          </NavLink>
+        </button>
+      </div>
       <table className="table table-striped">
         <thead>
           <tr>
@@ -32,7 +48,7 @@ function SalesList() {
           </tr>
         </thead>
         <tbody>
-          {sales?.map(sale => {
+          {sales?.map((sale) => {
             return (
               <tr key={sale.id}>
                 <td>{sale.salesman.name}</td>
@@ -45,7 +61,7 @@ function SalesList() {
           })}
         </tbody>
       </table>
-      </>
+      </div>
     );
   }
 
