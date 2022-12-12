@@ -35,7 +35,7 @@ def api_list_salesman(request):
             return response
 
 
-@require_http_methods(["DELETE"])
+@require_http_methods(["GET", "PUT", "DELETE"])
 def api_salesman(request, employee_id):
     if request.method == "DELETE":
         try:
@@ -48,6 +48,23 @@ def api_salesman(request, employee_id):
             )
         except Salesman.DoesNotExist:
             return JsonResponse({"message": "Salesman does not exist"})
+    elif request.method == "GET":
+            salesman = Salesman.objects.get(id=employee_id)
+            return JsonResponse(
+                salesman,
+                encoder=SalesmanEncoder,
+                safe=False,
+            )
+    else:
+        content = json.loads(request.body)
+        Salesman.objects.filter(employee_id=employee_id).update(**content)
+        salesman = Salesman.objects.get(id=employee_id)
+        return JsonResponse(
+            salesman,
+            encoder=SalesmanEncoder,
+            safe=False,
+        )
+
 
 
 @require_http_methods(["GET", "POST"])
@@ -75,7 +92,7 @@ def api_list_customers(request):
             return response
 
 
-@require_http_methods(["DELETE"])
+@require_http_methods(["GET", "PUT", "DELETE"])
 def api_customer(request, id):
     if request.method == "DELETE":
         try:
@@ -88,6 +105,22 @@ def api_customer(request, id):
             )
         except Customer.DoesNotExist:
             return JsonResponse({"message": "Customer does not exist"})
+    elif request.method == "GET":
+        customer = Customer.objects.get(id=id)
+        return JsonResponse(
+            customer,
+            encoder=CustomerEncoder,
+            safe=False,
+        )
+    else:
+        content = json.loads(request.body)
+        Customer.objects.filter(id=id).update(**content)
+        customer = Customer.objects.get(id=id)
+        return JsonResponse(
+            customer,
+            encoder=CustomerEncoder,
+            safe=False,
+        )
 
 
 @require_http_methods(["GET", "POST"])
