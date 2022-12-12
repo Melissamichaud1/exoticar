@@ -6,7 +6,8 @@ class ServiceAppointmentForm extends React.Component {
     this.state = {
       vin: "",
       vehicle_owner: "",
-      starts: "",
+      date: "",
+      time: "",
       technician: "",
       reason: "",
       technicians: [],
@@ -53,7 +54,8 @@ class ServiceAppointmentForm extends React.Component {
       const cleared = {
         vin: "",
         vehicle_owner: "",
-        starts: "",
+        date: "",
+        time: "",
         technician: [],
         technician: "",
         reason: "",
@@ -123,15 +125,28 @@ class ServiceAppointmentForm extends React.Component {
                 <div className="form-floating mb-3">
                   <input
                     onChange={this.handleChange}
-                    value={this.state.starts}
-                    placeholder="Date and Time"
+                    value={this.state.date}
+                    placeholder="Date"
                     required
-                    type="datetime-local"
-                    name="starts"
-                    id="starts"
+                    type="date"
+                    name="date"
+                    id="date"
                     className="form-control"
                   />
-                  <label htmlFor="starts">Date and Time</label>
+                  <label htmlFor="date">Date of Appt</label>
+                </div>
+                <div className="form-floating mb-3">
+                  <input
+                    onChange={this.handleChange}
+                    value={this.state.time}
+                    placeholder="Time"
+                    required
+                    type="time"
+                    name="time"
+                    id="stime"
+                    className="form-control"
+                  />
+                  <label htmlFor="time">Time of Appt</label>
                 </div>
                 <div className="mb-3">
                   <select

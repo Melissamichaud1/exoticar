@@ -165,7 +165,8 @@ class ServiceAppointmentList extends React.Component {
                 <th>VIP</th>
                 <th>VIN</th>
                 <th>Owner</th>
-                <th>Date and Time of Appt</th>
+                <th>Date of Appt</th>
+                <th>Time of Appt</th>
                 <th>Technician</th>
                 <th>Reason</th>
                 <th>Cancel Appt</th>
@@ -175,36 +176,33 @@ class ServiceAppointmentList extends React.Component {
             <tbody>
               {this.state.services
                 .filter((service) => service.finished == false)
-                .map((service) => {
-                  let date = Date.parse(service.starts);
-                  const newDate = Date(date);
-                  return (
-                    <tr key={service.id}>
-                      {this.VIP(service.vin)}
-                      <td>{service.vin}</td>
-                      <td>{service.vehicle_owner}</td>
-                      <td>{newDate.toLocaleString()}</td>
-                      <td>{service.technician.name}</td>
-                      <td>{service.reason}</td>
-                      <td>
-                        <button
-                          onClick={() => this.cancelService(service.id)}
-                          className="btn btn-danger"
-                        >
-                          Cancel
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          onClick={() => this.finishService(service.id)}
-                          className="btn btn-success"
-                        >
-                          Finished
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
+                .map((service) => (
+                  <tr key={service.id}>
+                    {this.VIP(service.vin)}
+                    <td>{service.vin}</td>
+                    <td>{service.vehicle_owner}</td>
+                    <td>{service.date}</td>
+                    <td>{service.time}</td>
+                    <td>{service.technician.name}</td>
+                    <td>{service.reason}</td>
+                    <td>
+                      <button
+                        onClick={() => this.cancelService(service.id)}
+                        className="btn btn-danger"
+                      >
+                        Cancel
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => this.finishService(service.id)}
+                        className="btn btn-success"
+                      >
+                        Finished
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

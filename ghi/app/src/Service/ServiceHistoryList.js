@@ -47,7 +47,8 @@ class ServiceHistoryList extends React.Component {
               <tr>
                 <th>VIN</th>
                 <th>Owner</th>
-                <th>Date and Time of Appt</th>
+                <th>Date of Appt</th>
+                <th>Time of Appt</th>
                 <th>Technician</th>
                 <th>Reason</th>
                 <th>Finished</th>
@@ -56,22 +57,18 @@ class ServiceHistoryList extends React.Component {
             <tbody>
               {this.state.services
                 .filter((service) => service.vin.includes(this.state.search))
-                .map((service) => {
-                  let date = Date.parse(service.starts);
-                  const newDate = Date(date);
-
-                  return (
-                    <tr key={service.id}>
-                      <td>{service.vin}</td>
-                      <td>{service.vehicle_owner}</td>
-                      <td>{newDate.toLocaleString()}</td>
-                      <td>{service.technician.name}</td>
-                      <td>{service.reason}</td>
-                      {service.finished && <td>Yes</td>}
-                      {!service.finished && <td>No</td>}
-                    </tr>
-                  );
-                })}
+                .map((service) => (
+                  <tr key={service.id}>
+                    <td>{service.vin}</td>
+                    <td>{service.vehicle_owner}</td>
+                    <td>{service.date}</td>
+                    <td>{service.time}</td>
+                    <td>{service.technician.name}</td>
+                    <td>{service.reason}</td>
+                    {service.finished && <td>Yes</td>}
+                    {!service.finished && <td>No</td>}
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
