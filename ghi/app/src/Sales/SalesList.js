@@ -2,24 +2,25 @@ import React, { useState, useEffect } from 'react';
 
 function SalesList() {
 
-  const [sales, setSales] = useState([]);
-  const loadSales  = async () => {
-    const url = 'http://localhost:8090/api/sales/'
-    const response = await fetch(url);
-    if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        setSales(data.sales);
-    } else {
-        console.error(response);
-    }
-}
+  const [sales, setSales] = useState([])
 
   useEffect(() => {
+    const loadSales  = async () => {
+      const url = 'http://localhost:8090/api/sales/'
+      const response = await fetch(url);
+      if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          setSales(data.sales);
+      } else {
+          console.error(response);
+      }
+  };
     loadSales();
   }, []);
 
     return (
+        <>
       <table className="table table-striped">
         <thead>
           <tr>
@@ -44,6 +45,7 @@ function SalesList() {
           })}
         </tbody>
       </table>
+      </>
     );
   }
 
