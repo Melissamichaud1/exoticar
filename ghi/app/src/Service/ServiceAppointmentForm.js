@@ -54,6 +54,7 @@ class ServiceAppointmentForm extends React.Component {
         vin: "",
         vehicle_owner: "",
         starts: "",
+        technician: [],
         technician: "",
         reason: "",
       };
@@ -75,20 +76,24 @@ class ServiceAppointmentForm extends React.Component {
   render() {
     let submittedClass = "alert alert-success d-none mb-0";
 
+    let formClass = "";
+
     if (this.state.submitted === true) {
       submittedClass = "alert alert-success mb-0";
+      formClass = "d-none";
     }
-    let dropdownClasses = "form-select d-none";
-    if (this.state.technicians.length > 0) {
-      dropdownClasses = "form-select";
-    }
+
     return (
       <div className="container">
         <div className="row">
           <div className="offset-3 col-6">
             <div className="shadow p-4 mt-4">
               <h1>Create a Service Appointment</h1>
-              <form onSubmit={this.handleSubmit} id="create-service-form">
+              <form
+                className={formClass}
+                onSubmit={this.handleSubmit}
+                id="create-service-form"
+              >
                 <div className="form-floating mb-3">
                   <input
                     onChange={this.handleChange}
@@ -133,7 +138,7 @@ class ServiceAppointmentForm extends React.Component {
                     onChange={this.handleChange}
                     name="technician"
                     id="technician"
-                    className={dropdownClasses}
+                    className="form-select"
                     required
                   >
                     <option value="">Choose a technician..</option>
