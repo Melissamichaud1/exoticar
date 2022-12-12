@@ -21,10 +21,7 @@ import SalesList from "./Sales/SalesList";
 import SaleForm from "./Sales/SaleForm";
 import SalesBySalesmen from "./Sales/FilteredSalesList";
 
-function App(props) {
-  if (props === undefined) {
-    return null;
-  }
+function App() {
   return (
     <BrowserRouter>
       <Nav />
@@ -32,7 +29,7 @@ function App(props) {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="automobiles">
-            <Route index element={<AutomobileList autos={props.autos} />} />
+            <Route path="" element={<AutomobileList />} />
             <Route path="new" element={<AutomobileForm />} />
           </Route>
           <Route path="manufacturers">
