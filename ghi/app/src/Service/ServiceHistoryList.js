@@ -1,79 +1,83 @@
-import React from "react"
+import React from "react";
 
 class ServiceHistoryList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            search: "",
-            services: []
-        };
-        this.handleSearchChange = this.handleSearchChange.bind(this);
+  state = {
+    search: "",
+    error: "",
+    services: [],
+  };
+
+  async componentDidMount() {
+    await this.serviceHistory();
+  }
+
+  async serviceHistory() {
+    const url = "http://localhost:8080/api/service/";
+    const response = await fetch(url);
+
+    if (response.ok) {
+      const data = await response.json();
+      this.setState({ services: data.services });
+    } else {
+      this.setState({ error: "Error fetching service history, try again." });
     }
+  }
 
-    async componentDidMount(){
-        const url = 'http://localhost:8080/api/service/'
-        const response = await fetch(url);
+  handleSearchChange = (event) => {
+    const value = event.target.value;
+    this.setState({ search: value });
+  };
 
-        if (response.ok) {
-            const data = await response.json();
-            this.setState({services: data.services})
-        }
-    }
+  render() {
+    return (
+      <div>
+        &nbsp;&nbsp;&nbsp;
+        <div className="input-group">
+          <input
+            onChange={this.handleSearchChange}
+            type="search"
+            className="form-control"
+            placeholder="Search VIN"
+          />
+        </div>
+        <div className="col-md-12 text-center">
+          <h2 className="display-5 fw-bold">Service History</h2>
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th>VIN</th>
+                <th>Owner</th>
+                <th>Date and Time of Appt</th>
+                <th>Technician</th>
+                <th>Reason</th>
+                <th>Finished</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.services
+                .filter((service) => service.vin.includes(this.state.search))
+                .map((service) => {
+                  let date = Date.parse(service.starts);
+                  const newDate = Date(date);
 
-    handleSearchChange(event) {
-        const value = event.target.value;
-        this.setState({ search: value })
-    }
-
-    render(){
-        return (
-                <div>
-                    <div>&nbsp;</div>
-                    <input onChange={this.handleSearchChange} value={this.state.search} type="search" id="form1" className="form-control" placeholder="Search VIN"/>
-
-                    <h2 className="display-5 fw-bold">Service History</h2>
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Vin</th>
-                                <th>Owner</th>
-                                <th>Date and Time of Appt</th>
-                                <th>Technician</th>
-                                <th>Reason</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.services.map(service => {
-
-                                let date = Date.parse(service.starts)
-                                const newDate = Date(date)
-
-                                let finished = 'd-none'
-                                if (service.finished == true) {
-                                    finished = ''
-                                }
-                                let search_bar = 'd-none'
-                                if(this.state.search == ''){
-                                    search_bar = ''
-                                } else if (service.vin.includes(this.state.search)){
-                                    search_bar = ''
-                                }
-
-                                return(
-                                <tr className={[search_bar, finished].join(" ")} key={service.id}>
-                                    <td>{service.vin}</td>
-                                    <td>{service.vehicle_owner}</td>
-                                    <td>{ newDate.toLocaleString()}</td>
-                                    <td>{ service.technician.name }</td>
-                                    <td>{ service.reason }</td>
-                                </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-        )
-    }
+                  return (
+                    <tr key={service.id}>
+                      <td>{service.vin}</td>
+                      <td>{service.vehicle_owner}</td>
+                      <td>{newDate.toLocaleString()}</td>
+                      <td>{service.technician.name}</td>
+                      <td>{service.reason}</td>
+                      {service.finished && <td>Yes</td>}
+                      {!service.finished && <td>No</td>}
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default ServiceHistoryList
+export default ServiceHistoryList;

@@ -4,7 +4,7 @@ from common.json import ModelEncoder
 
 class AutomobileVOEncoder(ModelEncoder):
     model = AutomobileVO
-    properties = ["color", "year", "vin", "import_href"]
+    properties = ["vin"]
 
 
 class TechnicianListEncoder(ModelEncoder):
@@ -18,14 +18,14 @@ class TechnicianDetailEncoder(ModelEncoder):
 
 class AppointmentListEncoder(ModelEncoder):
     model = Service
-    properties = ["vin", "vehicle_owner", "starts", "technician", "reason", "id", "finished", "vip"]
+    properties = ["vin", "vehicle_owner", "starts", "technician", "reason", "id", "finished"]
     encoders = {
         "technician": TechnicianDetailEncoder(),
     }
 
 class AppointmentDetailEncoder(ModelEncoder):
     model = Service
-    properties = ["vin", "vehicle_owner", "starts", "technician", "reason", "id", "finished", "vip"]
+    properties = ["vin", "vehicle_owner", "starts", "technician", "reason", "id", "finished"]
     encoders = {
         "technician": TechnicianDetailEncoder(),
     }

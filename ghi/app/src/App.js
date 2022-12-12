@@ -1,6 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainPage from './MainPage';
-import Nav from './Nav';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainPage from "./MainPage";
+import Nav from "./Nav";
 import AutomobileForm from "./Inventory/AutomobileForm";
 import AutomobileList from "./Inventory/AutomobileList";
 
@@ -15,10 +15,10 @@ import ServiceAppointmentForm from "./Service/ServiceAppointmentForm";
 import ServiceHistoryList from "./Service/ServiceHistoryList";
 import TechForm from "./Service/TechForm";
 
-import CustomerForm from './Sales/CustomerForm';
-import SalesmanForm from './Sales/SalesmanForm';
-import SalesList from './Sales/SalesList';
-import SaleForm from './Sales/SaleForm';
+import CustomerForm from "./Sales/CustomerForm";
+import SalesmanForm from "./Sales/SalesmanForm";
+import SalesList from "./Sales/SalesList";
+import SaleForm from "./Sales/SaleForm";
 
 function App(props) {
   if (props === undefined) {
@@ -30,39 +30,39 @@ function App(props) {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
-        <Route path="automobiles">
-          <Route index element={<AutomobileList autos={props.autos} />} />
-          <Route path="new" element={<AutomobileForm />} />
-        </Route>
-        <Route path="manufacturers">
-          <Route path="" element={<ManufacturerList />} />
-          <Route path="new" element={<ManufacturerForm />} />
-        </Route>
-        <Route path="models">
-          <Route path="" element={<ModelList />} />
-          <Route path="new" element={<ModelForm />} />
-        </Route>
-        <Route path="service">
+          <Route path="automobiles">
+            <Route index element={<AutomobileList autos={props.autos} />} />
+            <Route path="new" element={<AutomobileForm />} />
+          </Route>
+          <Route path="manufacturers">
+            <Route path="" element={<ManufacturerList />} />
+            <Route path="new" element={<ManufacturerForm />} />
+          </Route>
+          <Route path="models">
+            <Route path="" element={<ModelList />} />
+            <Route path="new" element={<ModelForm />} />
+          </Route>
+          <Route path="service">
             <Route path="" element={<ServiceAppointmentList />} />
             <Route path="new" element={<ServiceAppointmentForm />} />
             <Route path="history" element={<ServiceHistoryList />} />
-        </Route>
-        <Route path="technicians">
-            <Route path=""/>
+          </Route>
+          <Route path="technicians">
+            <Route path="" />
             <Route path="new" element={<TechForm />} />
-        </Route>
-        <Route path="customers">
-            <Route path=""/>
+          </Route>
+          <Route path="customers">
+            <Route path="" />
             <Route path="new" element={<CustomerForm />} />
-        </Route>
-        <Route path="salesmen">
-            <Route path=""/>
+          </Route>
+          <Route path="salesmen">
+            <Route path="" />
             <Route path="new" element={<SalesmanForm />} />
-        </Route>
-        <Route path="sales">
-            <Route path="" element={<SalesList/>} />
+          </Route>
+          <Route path="sales">
+            <Route path="" element={<SalesList />} />
             <Route path="new" element={<SaleForm />} />
-        </Route>
+          </Route>
         </Routes>
       </div>
     </BrowserRouter>
