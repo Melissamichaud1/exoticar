@@ -25,5 +25,13 @@ Team:
 
 ## Sales microservice
 
+- **_Sales API_**: RESTful API to handle automobile sales
+- **_Sales Poller_**: Poller to poll the Inventory API to get the automobiles and append the automobileVO
+- **DJANGO**: Beackend models, views and urls. Views with completed CRUD functions but not all added to front-end.
+
+- All forms and lists created in react with functional components
+
+
+
 Explain your models and integration with the inventory
 microservice, here.
