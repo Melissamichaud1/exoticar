@@ -11,7 +11,6 @@ function SalesList() {
       const response = await fetch(url);
       if (response.ok) {
           const data = await response.json();
-          console.log(data);
           setSales(data.sales);
       } else {
           console.error(response);

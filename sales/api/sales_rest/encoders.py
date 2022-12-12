@@ -23,11 +23,7 @@ class CustomerEncoder(ModelEncoder):
 class AutomobileVOEncoder(ModelEncoder):
     model = AutomobileVO
     properties = [
-        "id",
-        "color",
-        "year",
         "vin",
-        "import_href",
         "model"
     ]
 

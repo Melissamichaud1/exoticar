@@ -125,7 +125,7 @@ def api_customer(request, id):
 
 
 @require_http_methods(["GET", "POST"])
-def api_list_sales(request, autoumobile_vo_id=None):
+def api_list_sales(request):
     if request.method == "GET":
         sales = Sale.objects.all()
         return JsonResponse(
@@ -158,11 +158,6 @@ def api_list_sales(request, autoumobile_vo_id=None):
         try:
             vin = content["auto"]
             auto = AutomobileVO.objects.get(vin=vin)
-            # if auto.for_sale == True:
-            #     auto.for_sale = False
-            #     auto.save()
-            # else:
-            #     return JsonResponse({"message": "This car has already been sold"}, safe=False)
             content["auto"] = auto
         except AutomobileVO.DoesNotExist:
             response = JsonResponse(

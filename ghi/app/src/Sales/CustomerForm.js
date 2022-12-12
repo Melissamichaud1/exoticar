@@ -25,7 +25,6 @@ function CustomerForm() {
         const response = await fetch(customerUrl, fetchConfig);
         if (response.ok) {
             const newCustomer = await response.json();
-            console.log(newCustomer);
             setCustomer({ name: "", address: "", phone_number: ""});
         } else {
             console.error("Error in creating customer")

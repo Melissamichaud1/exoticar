@@ -20,8 +20,7 @@ def get_automobiles():
     content = json.loads(response.content)
     for auto in content["autos"]:
         AutomobileVO.objects.update_or_create(
-            import_href=auto["href"],
-            defaults={"color": auto["color"], "year": auto["year"], "vin": auto["vin"], "model": auto["model"]["name"]},
+            defaults={"vin": auto["vin"], "model": auto["model"]["name"]},
         )
 
 def poll():

@@ -60,7 +60,6 @@ function SaleForm() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = {...sale}
-        console.log(data)
         const saleUrl = "http://localhost:8090/api/sales/";
         const fetchConfig = {
             method: "POST",
@@ -72,7 +71,6 @@ function SaleForm() {
         const response = await fetch(saleUrl, fetchConfig);
         if (response.ok) {
             const newsale = await response.json();
-            console.log(newsale);
             setSale({auto: "", salesman: "", customer: "", price: "",});
             setAutomobiles((automobiles.filter((auto) => (auto.vin !== newsale.auto.vin))))
         } else {

@@ -24,7 +24,6 @@ function SalesmanForm() {
         const response = await fetch(salesmanUrl, fetchConfig);
         if (response.ok) {
             const newSalesman = await response.json();
-            console.log(newSalesman);
             setSalesman({ name: "", employee_id: ""});
         } else {
             console.error("Error in creating salesman")
