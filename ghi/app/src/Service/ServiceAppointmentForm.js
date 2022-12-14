@@ -88,6 +88,7 @@ class ServiceAppointmentForm extends React.Component {
 
     return (
       <div className="form-container">
+        <video src="/videos/black.mp4" type="video/mp4" autoPlay loop muted />
         <div className="row">
           <div className="offset-3 col-6">
             <div className="shadow p-4 mt-4">

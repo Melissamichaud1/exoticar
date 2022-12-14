@@ -16,16 +16,16 @@ function AutomobileList() {
   };
 
   const sellAutomobile = async (id) => {
-    const finishUrl = `http://localhost:8080/api/automobiles/${id}/`;
-    const finished = { finished: "true" };
+    const finishUrl = `http://localhost:8100/api/automobiles/${id}/`;
     const fetchConfig = {
       method: "PUT",
-      body: JSON.stringify(finished),
+      body: JSON.stringify({ finished: true }),
       headers: {
         "Content-Type": "application/json",
       },
     };
     await fetch(finishUrl, fetchConfig);
+    fetchData();
   };
 
   useEffect(() => {
@@ -62,10 +62,10 @@ function AutomobileList() {
         </thead>
         <tbody>
           {automobiles
-            ?.filter((auto) => auto.finished !== "true")
-            .map((auto) => {
+            ?.filter((auto) => auto.finished == false)
+            ?.map((auto) => {
               return (
-                <tr key={auto.id} value={auto.id}>
+                <tr key={auto.id}>
                   <td>{auto.vin}</td>
                   <td>{auto.year}</td>
                   <td>{auto.color}</td>
@@ -74,7 +74,6 @@ function AutomobileList() {
                   <td>
                     <button
                       onClick={() => sellAutomobile(auto.id)}
-                      name="finished"
                       value={auto.finished}
                       className="btn btn-dark"
                     >
