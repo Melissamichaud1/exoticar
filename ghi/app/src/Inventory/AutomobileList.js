@@ -15,6 +15,19 @@ function AutomobileList() {
     }
   };
 
+  const sellAutomobile = async (id) => {
+    const finishUrl = `http://localhost:8080/api/automobiles/${id}/`;
+    const finished = { finished: "true" };
+    const fetchConfig = {
+      method: "PUT",
+      body: JSON.stringify(finished),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    await fetch(finishUrl, fetchConfig);
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -44,20 +57,33 @@ function AutomobileList() {
             <th>Color</th>
             <th>Manufacturer</th>
             <th>Model</th>
+            <th>Sold</th>
           </tr>
         </thead>
         <tbody>
-          {automobiles?.map((auto) => {
-            return (
-              <tr key={auto.id} value={auto.id}>
-                <td>{auto.vin}</td>
-                <td>{auto.year}</td>
-                <td>{auto.color}</td>
-                <td>{auto.model.manufacturer.name}</td>
-                <td>{auto.model.name}</td>
-              </tr>
-            );
-          })}
+          {automobiles
+            ?.filter((auto) => auto.finished !== "true")
+            .map((auto) => {
+              return (
+                <tr key={auto.id} value={auto.id}>
+                  <td>{auto.vin}</td>
+                  <td>{auto.year}</td>
+                  <td>{auto.color}</td>
+                  <td>{auto.model.manufacturer.name}</td>
+                  <td>{auto.model.name}</td>
+                  <td>
+                    <button
+                      onClick={() => sellAutomobile(auto.id)}
+                      name="finished"
+                      value={auto.finished}
+                      className="btn btn-dark"
+                    >
+                      Sold
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>
