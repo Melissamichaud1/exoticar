@@ -1,78 +1,80 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function SalesBySalesmen() {
+  const [sales, setSales] = useState([
+    {
+      id: "",
+      price: "",
+      customer: "",
+      salesman: "",
+      auto: "",
+    },
+  ]);
 
-  const [sales, setSales] = useState([{
-    id: "",
-    price: "",
-    customer: "",
-    salesman: "",
-    auto: "",
-  }]);
-
-  const [salesmen, setSalesmen] = useState([{
-    id: "",
-    name: "",
-    employee_id: "",
-  }]);
+  const [salesmen, setSalesmen] = useState([
+    {
+      id: "",
+      name: "",
+      employee_id: "",
+    },
+  ]);
 
   const [salesman, setSalesman] = useState("");
 
   useEffect(() => {
-    const loadSales  = async () => {
-      const url = 'http://localhost:8090/api/sales/'
+    const loadSales = async () => {
+      const url = "http://localhost:8090/api/sales/";
       const response = await fetch(url);
       if (response.ok) {
-          const data = await response.json();
-          setSales(data.sales);
+        const data = await response.json();
+        setSales(data.sales);
       } else {
-          console.error(response);
+        console.error(response);
       }
-  };
-      const loadSalesmen  = async () => {
-          const salesmenUrl = 'http://localhost:8090/api/salesmen/'
-          const response = await fetch(salesmenUrl);
-          if (response.ok) {
-              const data = await response.json();
-              setSalesmen(data.salesman);
-          } else {
-              console.error(response);
-          }
-      };
+    };
+    const loadSalesmen = async () => {
+      const salesmenUrl = "http://localhost:8090/api/salesmen/";
+      const response = await fetch(salesmenUrl);
+      if (response.ok) {
+        const data = await response.json();
+        setSalesmen(data.salesman);
+      } else {
+        console.error(response);
+      }
+    };
     loadSales();
     loadSalesmen();
   }, []);
 
   const handleSalesmanSelect = (event) => {
     setSalesman(event.target.value);
-    }
+  };
 
-    return (
-        <>
-    <div>
-        <h1>Salesman sale history</h1>
+  return (
+    <>
+      <div>
+        <div className="col-md-12 text-center">
+          <h1>Salesman sale history</h1>
+        </div>
         <div className="mb-3">
-            <select
+          <select
             onChange={handleSalesmanSelect}
             value={salesman}
             id="salesman"
             name="salesman"
             className="form-select"
-            >
-            <option value=''>Choose a salesman</option>
-            {salesmen?.map(salesman => {
-                return (
-                <option
-                    key={salesman.employee_id}
-                    value={salesman.name}
-                >
-                    {salesman.name}
+          >
+            <option value="">Choose a salesman</option>
+            {salesmen?.map((salesman) => {
+              return (
+                <option key={salesman.employee_id} value={salesman.name}>
+                  {salesman.name}
                 </option>
-                );
+              );
             })}
-            </select>
+          </select>
         </div>
-    </div>
+      </div>
       <table className="table table-striped">
         <thead>
           <tr>
@@ -84,22 +86,23 @@ function SalesBySalesmen() {
           </tr>
         </thead>
         <tbody>
-        {sales.filter((sale) => sale.salesman.name === salesman).map((sale) => {
-            return (
-              <tr key={sale.id}>
-                <td>{sale.salesman.name}</td>
-                <td>{sale.salesman.employee_id}</td>
-                <td>{sale.customer.name}</td>
-                <td>{sale.auto.vin}</td>
-                <td>${sale.price}</td>
-              </tr>
-            );
-          })}
+          {sales
+            .filter((sale) => sale.salesman.name === salesman)
+            .map((sale) => {
+              return (
+                <tr key={sale.id}>
+                  <td>{sale.salesman.name}</td>
+                  <td>{sale.salesman.employee_id}</td>
+                  <td>{sale.customer.name}</td>
+                  <td>{sale.auto.vin}</td>
+                  <td>${sale.price}</td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
-      </>
-    );
-  }
-
+    </>
+  );
+}
 
 export default SalesBySalesmen;

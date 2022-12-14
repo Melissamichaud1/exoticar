@@ -24,7 +24,7 @@ function ModelList() {
         <h2 className="display-5 fw-bold">List of Models</h2>
       </div>
       <div className="col-md-12 text-center">
-        <button type="button" className="btn btn-success">
+        <button type="button" className="btn btn-dark">
           <NavLink
             style={{ color: "white" }}
             className="nav-link"
@@ -54,8 +54,8 @@ function ModelList() {
                     <td>
                       <img
                         src={model.picture_url}
-                        height="150"
-                        width="220"
+                        height="400"
+                        width="600"
                       ></img>
                     </td>
                   </tr>

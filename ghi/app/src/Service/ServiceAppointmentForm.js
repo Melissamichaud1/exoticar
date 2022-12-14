@@ -1,4 +1,5 @@
 import React from "react";
+import "./Service.css";
 
 class ServiceAppointmentForm extends React.Component {
   constructor(props) {
@@ -86,11 +87,13 @@ class ServiceAppointmentForm extends React.Component {
     }
 
     return (
-      <div className="container">
+      <div className="form-container">
         <div className="row">
           <div className="offset-3 col-6">
             <div className="shadow p-4 mt-4">
-              <h1>Create a Service Appointment</h1>
+              <div className="col-md-12 text-center" style={{ color: "white" }}>
+                <h1>Create A Service Appointment</h1>
+              </div>
               <form
                 className={formClass}
                 onSubmit={this.handleSubmit}
@@ -182,10 +185,8 @@ class ServiceAppointmentForm extends React.Component {
                   />
                   <label htmlFor="reason"></label>
                 </div>
-                <div>
-                  <button className="btn btn-primary">
-                    Create Appointment
-                  </button>
+                <div className="col-md-12 text-center">
+                  <button className="btn btn-light">Create Appointment</button>
                 </div>
               </form>
               <div className={submittedClass} id="success-message">

@@ -48,7 +48,9 @@ class TechForm extends React.Component {
       <div className="row">
         <div className="offset-3 col-6">
           <div className="shadow p-4 mt-4">
-            <h1>Create Technician</h1>
+            <div className="col-md-12 text-center">
+              <h1>Create Technician</h1>
+            </div>
             <form onSubmit={this.handleSubmit} id="create-tech-form">
               <div className="form-floating mb-3">
                 <input
@@ -76,7 +78,11 @@ class TechForm extends React.Component {
                 />
                 <label htmlFor="employee_number">Employee Number</label>
               </div>
-              <button className="btn btn-primary">Create</button>
+              <div className="col-md-12 text-center">
+                <button className="btn btn-dark btn-lg btn-block">
+                  Create
+                </button>
+              </div>
             </form>
           </div>
         </div>

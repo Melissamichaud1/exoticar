@@ -95,7 +95,7 @@ class ServiceAppointmentList extends React.Component {
           <h2 className="display-5 fw-bold">Service Appointments</h2>
         </div>
         <div className="col-md-12 text-center">
-          <button type="button" className="btn btn-success">
+          <button type="button" className="btn btn-dark">
             <NavLink
               style={{ color: "white" }}
               className="nav-link"
@@ -106,7 +106,7 @@ class ServiceAppointmentList extends React.Component {
             </NavLink>
           </button>{" "}
           &nbsp;&nbsp;&nbsp;
-          <button type="button" className="btn btn-success">
+          <button type="button" className="btn btn-dark">
             <NavLink
               style={{ color: "white" }}
               className="nav-link"
@@ -117,7 +117,7 @@ class ServiceAppointmentList extends React.Component {
             </NavLink>
           </button>{" "}
           &nbsp;&nbsp;&nbsp;
-          <button type="button" className="btn btn-success">
+          <button type="button" className="btn btn-dark">
             <NavLink
               style={{ color: "white" }}
               className="nav-link"
@@ -196,7 +196,7 @@ class ServiceAppointmentList extends React.Component {
                     <td>
                       <button
                         onClick={() => this.finishService(service.id)}
-                        className="btn btn-success"
+                        className="btn btn-dark"
                       >
                         Finished
                       </button>

@@ -37,7 +37,9 @@ function ManufacturerForm() {
       <div className="row"></div>
       <div className="offset-3 col-6">
         <div className="shadow p-4 mt-4">
-          <h1>Create a manufacturer</h1>
+          <div className="col-md-12 text-center">
+            <h1>Create a Manufacturer</h1>
+          </div>
           <form onSubmit={handleSubmit} id="create_manufacturer_form">
             <div className="form-floating mb-3">
               <input
@@ -52,7 +54,9 @@ function ManufacturerForm() {
               />
               <label htmlFor="name">Name</label>
             </div>
-            <button className="btn btn-primary">Create</button>
+            <div className="col-md-12 text-center">
+              <button className="btn btn-dark btn-lg btn-block">Create</button>
+            </div>
           </form>
         </div>
       </div>
