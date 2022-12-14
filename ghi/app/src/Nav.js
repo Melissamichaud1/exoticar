@@ -1,11 +1,12 @@
 import { NavLink } from "react-router-dom";
+import "./Navbar.css";
 
 function Nav() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-success">
-      <div className="container-fluid">
+      <div className="navbar-container">
         <NavLink className="navbar-brand" to="/">
-          CarCar
+          ExotiCar
         </NavLink>
         <button
           className="navbar-toggler"
@@ -45,11 +46,6 @@ function Nav() {
                     Service Appointment History
                   </NavLink>
                 </li>
-                <li className="nav-item">
-                  <NavLink className="dropdown-item" to="/technicians/new/">
-                    Create a technician
-                  </NavLink>
-                </li>
               </ul>
             </li>
             <li className="nav-item dropdown">
@@ -74,17 +70,17 @@ function Nav() {
                 </li>
                 <li className="nav-item">
                   <NavLink className="dropdown-item" to="/sales/">
-                    Sales list
+                    Sales List
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink className="dropdown-item" to="/sales/history/">
-                    Salesman sale history
+                    Sales History
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink className="dropdown-item" to="/sales/new/">
-                    New Sale
+                    Create a New Sale
                   </NavLink>
                 </li>
               </ul>
@@ -127,6 +123,23 @@ function Nav() {
                 <li className="nav-item">
                   <NavLink className="dropdown-item" to="/models/new/">
                     Create a Vehicle Model
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Technicians
+              </a>
+              <ul className="dropdown-menu">
+                <li className="nav-item">
+                  <NavLink className="dropdown-item" to="/technicians/new/">
+                    Create a technician
                   </NavLink>
                 </li>
               </ul>

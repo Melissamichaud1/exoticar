@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPage from "./MainPage";
 import Nav from "./Nav";
+import "./App.css";
 import AutomobileForm from "./Inventory/AutomobileForm";
 import AutomobileList from "./Inventory/AutomobileList";
 
@@ -19,7 +20,6 @@ import CustomerForm from "./Sales/CustomerForm";
 import SalesmanForm from "./Sales/SalesmanForm";
 import SalesList from "./Sales/SalesList";
 import SaleForm from "./Sales/SaleForm";
-import SalesBySalesmen from "./Sales/FilteredSalesList";
 
 function App() {
   return (
@@ -60,7 +60,6 @@ function App() {
           <Route path="sales">
             <Route path="" element={<SalesList />} />
             <Route path="new" element={<SaleForm />} />
-            <Route path="history" element={<SalesBySalesmen />} />
           </Route>
         </Routes>
       </div>

@@ -170,7 +170,7 @@ class ServiceAppointmentList extends React.Component {
                 <th>Technician</th>
                 <th>Reason</th>
                 <th>Cancel Appt</th>
-                <th>Completed Appt</th>
+                <th>Complete Appt</th>
               </tr>
             </thead>
             <tbody>
