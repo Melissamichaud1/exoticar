@@ -11,7 +11,7 @@ function MainPage() {
         <h1 style={{ color: "white" }} className="display-5 fw-bold">
           ExotiCar
         </h1>
-        <div className="col-lg-6 mx-auto">
+        <div>
           <p style={{ color: "white" }} className="lead mb-4">
             Don't just dream it. Drive it.
           </p>

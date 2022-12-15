@@ -45,45 +45,47 @@ class TechForm extends React.Component {
 
   render() {
     return (
-      <div className="row">
-        <div className="offset-3 col-6">
-          <div className="shadow p-4 mt-4">
-            <div className="col-md-12 text-center">
-              <h1>Create Technician</h1>
-            </div>
-            <form onSubmit={this.handleSubmit} id="create-tech-form">
-              <div className="form-floating mb-3">
-                <input
-                  onChange={this.handleChange}
-                  value={this.state.name}
-                  placeholder="Name"
-                  required
-                  type="text"
-                  name="name"
-                  id="name"
-                  className="form-control"
-                />
-                <label htmlFor="name">Name</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  onChange={this.handleChange}
-                  value={this.state.employee_number}
-                  placeholder="Employee Number"
-                  required
-                  type="text"
-                  name="employee_number"
-                  id="employee_number"
-                  className="form-control"
-                />
-                <label htmlFor="employee_number">Employee Number</label>
-              </div>
+      <div className="techform-container">
+        <div className="row">
+          <div className="offset-3 col-6">
+            <div className="shadow p-4 mt-4">
               <div className="col-md-12 text-center">
-                <button className="btn btn-dark btn-lg btn-block">
-                  Create
-                </button>
+                <h1>Create Technician</h1>
               </div>
-            </form>
+              <form onSubmit={this.handleSubmit} id="create-tech-form">
+                <div className="form-floating mb-3">
+                  <input
+                    onChange={this.handleChange}
+                    value={this.state.name}
+                    placeholder="Name"
+                    required
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="form-control"
+                  />
+                  <label htmlFor="name">Name</label>
+                </div>
+                <div className="form-floating mb-3">
+                  <input
+                    onChange={this.handleChange}
+                    value={this.state.employee_number}
+                    placeholder="Employee Number"
+                    required
+                    type="text"
+                    name="employee_number"
+                    id="employee_number"
+                    className="form-control"
+                  />
+                  <label htmlFor="employee_number">Employee Number</label>
+                </div>
+                <div className="col-md-12 text-center">
+                  <button className="btn btn-dark btn-lg btn-block">
+                    Create
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
