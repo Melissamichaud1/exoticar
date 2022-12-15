@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 
 function ModelList() {
   const [models, setModels] = useState([]);
@@ -13,6 +13,8 @@ function ModelList() {
       console.error("Error in fetching vehicle models, try again.");
     }
   };
+
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     loadModels();
@@ -34,6 +36,15 @@ function ModelList() {
             Create a model
           </NavLink>
         </button>
+        <div>
+          &nbsp;&nbsp;&nbsp;
+          <input
+            type="search"
+            placeholder="Search by Model"
+            className="form-control"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
       </div>
       <div className="container">
         <div className="col-md-12 text-center">
@@ -46,8 +57,9 @@ function ModelList() {
               </tr>
             </thead>
             <tbody>
-              {models?.map((model) => {
-                return (
+              {models
+                ?.filter((model) => model.name.includes(search))
+                .map((model) => (
                   <tr key={model.id}>
                     <td>{model.name}</td>
                     <td>{model.manufacturer.name}</td>
@@ -59,8 +71,7 @@ function ModelList() {
                       ></img>
                     </td>
                   </tr>
-                );
-              })}
+                ))}
             </tbody>
           </table>
         </div>
