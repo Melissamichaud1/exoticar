@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useSearchParams } from "react-router-dom";
+import "./VehicleModelList.css";
 
 function ModelList() {
   const [models, setModels] = useState([]);
@@ -22,7 +23,9 @@ function ModelList() {
 
   return (
     <div className="container">
+      <video src="/videos/race.mp4" type="video/mp4" autoPlay loop muted />
       <div className="col-md-12 text-center">
+        &nbsp;&nbsp;&nbsp;
         <h2 className="display-5 fw-bold">List of Models</h2>
       </div>
       <div className="col-md-12 text-center">
@@ -31,50 +34,33 @@ function ModelList() {
             style={{ color: "white" }}
             className="nav-link"
             aria-current="page"
-            to="/models/new"
+            to="/models/pagani"
           >
-            Create a model
+            Pagani
           </NavLink>
         </button>
-        <div>
-          &nbsp;&nbsp;&nbsp;
-          <input
-            type="search"
-            placeholder="Search by Model"
-            className="form-control"
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-      </div>
-      <div className="container">
-        <div className="col-md-12 text-center">
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Manufacturer</th>
-                <th>Picture</th>
-              </tr>
-            </thead>
-            <tbody>
-              {models
-                ?.filter((model) => model.name.includes(search))
-                .map((model) => (
-                  <tr key={model.id}>
-                    <td>{model.name}</td>
-                    <td>{model.manufacturer.name}</td>
-                    <td>
-                      <img
-                        src={model.picture_url}
-                        height="400"
-                        width="600"
-                      ></img>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
+        &nbsp;&nbsp;&nbsp;
+        <button type="button" className="btn btn-dark">
+          <NavLink
+            style={{ color: "white" }}
+            className="nav-link"
+            aria-current="page"
+            to="/models/mclaren"
+          >
+            Mclaren
+          </NavLink>
+        </button>
+        &nbsp;&nbsp;&nbsp;
+        <button type="button" className="btn btn-dark">
+          <NavLink
+            style={{ color: "white" }}
+            className="nav-link"
+            aria-current="page"
+            to="/models/bugatti"
+          >
+            Bugatti
+          </NavLink>
+        </button>
       </div>
     </div>
   );

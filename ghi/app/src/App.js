@@ -10,6 +10,9 @@ import ManufacturerList from "./Inventory/ManufacturerList";
 
 import ModelForm from "./Inventory/VehicleModelForm";
 import ModelList from "./Inventory/VehicleModelList";
+import ModelListPagani from "./Inventory/VehicleModelListPagani";
+import ModelListMclaren from "./Inventory/VehicleModelListMclaren";
+import ModelListBugatti from "./Inventory/VehicleModelListBugatti";
 
 import ServiceAppointmentList from "./Service/ServiceAppointmentList";
 import ServiceAppointmentForm from "./Service/ServiceAppointmentForm";
@@ -40,6 +43,9 @@ function App() {
           <Route path="models">
             <Route path="" element={<ModelList />} />
             <Route path="new" element={<ModelForm />} />
+            <Route path="pagani" element={<ModelListPagani />} />
+            <Route path="mclaren" element={<ModelListMclaren />} />
+            <Route path="bugatti" element={<ModelListBugatti />} />
           </Route>
           <Route path="service">
             <Route path="" element={<ServiceAppointmentList />} />
