@@ -30,6 +30,7 @@ function AutomobileList() {
 
   useEffect(() => {
     fetchData();
+    sellAutomobile();
   }, []);
 
   return (
