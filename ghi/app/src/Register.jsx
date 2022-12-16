@@ -66,12 +66,14 @@ export const Register = (props) => {
                 </button>
               </form>
               &nbsp;&nbsp;&nbsp;
-              <button
-                className="btn btn-light"
-                onClick={() => props.onFormSwitch("login")}
-              >
-                Already have an account? Login here.
-              </button>
+              <div>
+                <button
+                  className="btn btn-light"
+                  onClick={() => props.onFormSwitch("login")}
+                >
+                  Already have an account? Login here.
+                </button>
+              </div>
             </div>
           </div>
         </div>

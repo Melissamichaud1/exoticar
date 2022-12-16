@@ -61,12 +61,14 @@ export const Login = (props) => {
                 </button>
               </form>
               &nbsp;&nbsp;&nbsp;
-              <button
-                className="btn btn-light"
-                onClick={() => props.onFormSwitch("register")}
-              >
-                Don't have an account? Register here.
-              </button>
+              <div>
+                <button
+                  className="btn btn-light"
+                  onClick={() => props.onFormSwitch("register")}
+                >
+                  Don't have an account? Register here.
+                </button>
+              </div>
             </div>
           </div>
         </div>
