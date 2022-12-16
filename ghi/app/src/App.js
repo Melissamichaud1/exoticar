@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
 import MainPage from "./MainPage";
 import Nav from "./Nav";
 import "./App.css";
+import "./Account.css";
 import AutomobileForm from "./Inventory/AutomobileForm";
 import AutomobileList from "./Inventory/AutomobileList";
 
@@ -25,7 +27,15 @@ import SalesList from "./Sales/SalesList";
 import SaleForm from "./Sales/SaleForm";
 import FilteredSalesList from "./Sales/FilteredSalesList";
 
+import { Login } from "./Login";
+import { Register } from "./Register";
+
 function App() {
+  const [currentForm, setCurrentForm] = useState("login");
+  const toggleForm = (formName) => {
+    setCurrentForm(formName);
+  };
+
   return (
     <BrowserRouter>
       <Nav />
@@ -68,6 +78,18 @@ function App() {
             <Route path="" element={<SalesList />} />
             <Route path="new" element={<SaleForm />} />
             <Route path="history" element={<FilteredSalesList />} />
+          </Route>
+          <Route path="login">
+            <Route
+              path=""
+              element={
+                currentForm === "login" ? (
+                  <Login onFormSwitch={toggleForm} />
+                ) : (
+                  <Register onFormSwitch={toggleForm} />
+                )
+              }
+            />
           </Route>
         </Routes>
       </div>

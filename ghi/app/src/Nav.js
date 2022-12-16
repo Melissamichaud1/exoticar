@@ -28,6 +28,23 @@ function Nav() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
+                Account
+              </a>
+              <ul className="dropdown-menu">
+                <li className="nav-item">
+                  <NavLink className="dropdown-item" to="/login/">
+                    Login
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 Services
               </a>
               <ul className="dropdown-menu">
