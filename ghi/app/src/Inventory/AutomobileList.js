@@ -17,20 +17,12 @@ function AutomobileList() {
 
   const sellAutomobile = async (id) => {
     const finishUrl = `http://localhost:8100/api/automobiles/${id}/`;
-    const fetchConfig = {
-      method: "PUT",
-      body: JSON.stringify({ finished: true }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    await fetch(finishUrl, fetchConfig);
+    const response = await fetch(finishUrl, { method: "DELETE" });
     fetchData();
   };
 
   useEffect(() => {
     fetchData();
-    sellAutomobile();
   }, []);
 
   return (
@@ -62,31 +54,29 @@ function AutomobileList() {
           </tr>
         </thead>
         <tbody>
-          {automobiles
-            ?.filter((auto) => auto.finished == false)
-            ?.map((auto) => {
-              return (
-                <tr key={auto.id}>
-                  <td>{auto.vin}</td>
-                  <td>{auto.year}</td>
-                  <td>{auto.color}</td>
-                  <td>{auto.model.manufacturer.name}</td>
-                  <td>{auto.model.name}</td>
-                  <td>
-                    <button
-                      onClick={() => sellAutomobile(auto.id)}
-                      value={auto.finished}
-                      className="btn btn-dark"
-                    >
-                      Sold
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+          {automobiles?.map((auto) => {
+            return (
+              <tr key={auto.id}>
+                <td>{auto.vin}</td>
+                <td>{auto.year}</td>
+                <td>{auto.color}</td>
+                <td>{auto.model.manufacturer.name}</td>
+                <td>{auto.model.name}</td>
+                <td>
+                  <button
+                    onClick={() => sellAutomobile(auto.vin)}
+                    className="btn btn-dark"
+                  >
+                    Sold
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
   );
 }
+
 export default AutomobileList;
