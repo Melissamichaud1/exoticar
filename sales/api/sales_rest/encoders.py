@@ -24,7 +24,8 @@ class AutomobileVOEncoder(ModelEncoder):
     model = AutomobileVO
     properties = [
         "vin",
-        "model"
+        "model",
+        "import_href"
     ]
 
 class SaleEncoder(ModelEncoder):

@@ -59,7 +59,7 @@ def api_salesman(request, employee_id):
     else:
         content = json.loads(request.body)
         Salesman.objects.filter(employee_id=employee_id).update(**content)
-        salesman = Salesman.objects.get(id=employee_id)
+        salesman = Salesman.objects.get(employee_id=employee_id)
         return JsonResponse(
             salesman,
             encoder=SalesmanEncoder,
